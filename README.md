@@ -91,7 +91,7 @@ On input, clear that field’s errors with `Validation.resetErrorsPerField "emai
 
 ## 🚀 Demo
 
-## Explore the live demo: [https://dusste.github.io/elm-validation](https://dusste.github.io/elm-pie-chart)
+## Explore the live demo: [https://dusste.github.io/elm-validation](https://dusste.github.io/elm-validation)
 
 ## Running the demo
 
