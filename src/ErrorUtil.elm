@@ -1,4 +1,4 @@
-module Error exposing (..)
+module ErrorUtil exposing (..)
 
 import Dict exposing (Dict)
 import Html exposing (Html)

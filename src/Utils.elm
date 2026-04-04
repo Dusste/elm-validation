@@ -1,4 +1,4 @@
-module Util exposing (..)
+module Utils exposing (..)
 
 import Regex
 import String.Extra

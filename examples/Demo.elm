@@ -2,7 +2,7 @@ module Demo exposing (main)
 
 import Browser
 import Dict exposing (Dict)
-import Error
+import ErrorUtil
 import File exposing (File)
 import File.Select as Select
 import Html exposing (Html)
@@ -596,7 +596,7 @@ view model =
                 [ HA.id textareaId
                 , HA.class "w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400 min-h-[100px]"
                 , HA.style "border"
-                    (if Error.hasError textareaId model.formErrors then
+                    (if ErrorUtil.hasError textareaId model.formErrors then
                         "1px solid red"
 
                      else
@@ -607,8 +607,8 @@ view model =
                 , HE.onInput SetTextareaValue
                 ]
                 []
-            , Error.byFieldName textareaId model.formErrors
-                |> Error.withStandaloneField
+            , ErrorUtil.byFieldName textareaId model.formErrors
+                |> ErrorUtil.withStandaloneField
             ]
         , Html.hr [ HA.class "my-4" ] []
         , Html.div
@@ -630,8 +630,8 @@ view model =
 
                 Nothing ->
                     Html.text ""
-            , Error.byFieldName attachmentId model.formErrors
-                |> Error.withStandaloneField
+            , ErrorUtil.byFieldName attachmentId model.formErrors
+                |> ErrorUtil.withStandaloneField
             ]
         , Html.hr [ HA.class "my-4" ] []
         , Html.div
@@ -643,7 +643,7 @@ view model =
                 [ HA.type_ "text"
                 , HA.class "w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400"
                 , HA.style "border"
-                    (if Error.hasError textInputId model.formErrors then
+                    (if ErrorUtil.hasError textInputId model.formErrors then
                         "1px solid red"
 
                      else
@@ -654,8 +654,8 @@ view model =
                 , HE.onInput SetTextInputValue
                 ]
                 []
-            , Error.byFieldName textInputId model.formErrors
-                |> Error.withStandaloneField
+            , ErrorUtil.byFieldName textInputId model.formErrors
+                |> ErrorUtil.withStandaloneField
             ]
         , Html.hr [ HA.class "my-4" ] []
         , Html.div
@@ -670,7 +670,7 @@ view model =
                 [ HA.type_ "text"
                 , HA.class "w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400"
                 , HA.style "border"
-                    (if Error.hasError businessEmailId model.formErrors then
+                    (if ErrorUtil.hasError businessEmailId model.formErrors then
                         "1px solid red"
 
                      else
@@ -681,8 +681,8 @@ view model =
                 , HE.onInput SetBusinessEmail
                 ]
                 []
-            , Error.byFieldName businessEmailId model.formErrors
-                |> Error.withStandaloneField
+            , ErrorUtil.byFieldName businessEmailId model.formErrors
+                |> ErrorUtil.withStandaloneField
             ]
         , Html.hr [ HA.class "my-4" ] []
         , Html.div
@@ -694,7 +694,7 @@ view model =
                 [ HA.type_ "password"
                 , HA.class "w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400"
                 , HA.style "border"
-                    (if Error.hasError passwordId model.formErrors then
+                    (if ErrorUtil.hasError passwordId model.formErrors then
                         "1px solid red"
 
                      else
@@ -705,13 +705,13 @@ view model =
                 , HE.onInput SetPassword
                 ]
                 []
-            , Error.byFieldName passwordId model.formErrors
-                |> Error.withStandaloneField
+            , ErrorUtil.byFieldName passwordId model.formErrors
+                |> ErrorUtil.withStandaloneField
             , Html.input
                 [ HA.type_ "password"
                 , HA.class "w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400 mt-2"
                 , HA.style "border"
-                    (if Error.hasError confirmPasswordId model.formErrors then
+                    (if ErrorUtil.hasError confirmPasswordId model.formErrors then
                         "1px solid red"
 
                      else
@@ -722,8 +722,8 @@ view model =
                 , HE.onInput SetConfirmPassword
                 ]
                 []
-            , Error.byFieldName confirmPasswordId model.formErrors
-                |> Error.withStandaloneField
+            , ErrorUtil.byFieldName confirmPasswordId model.formErrors
+                |> ErrorUtil.withStandaloneField
             ]
         , Html.hr [ HA.class "my-4" ] []
         , Html.div
@@ -735,7 +735,7 @@ view model =
                 [ HA.type_ "text"
                 , HA.class "w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400"
                 , HA.style "border"
-                    (if Error.hasError fullNameId model.formErrors then
+                    (if ErrorUtil.hasError fullNameId model.formErrors then
                         "1px solid red"
 
                      else
@@ -746,8 +746,8 @@ view model =
                 , HE.onInput SetFullName
                 ]
                 []
-            , Error.byFieldName fullNameId model.formErrors
-                |> Error.withStandaloneField
+            , ErrorUtil.byFieldName fullNameId model.formErrors
+                |> ErrorUtil.withStandaloneField
             ]
         , Html.hr [ HA.class "my-4" ] []
         , Html.div
@@ -759,7 +759,7 @@ view model =
                 [ HA.type_ "text"
                 , HA.class "w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400"
                 , HA.style "border"
-                    (if Error.hasError phoneId model.formErrors then
+                    (if ErrorUtil.hasError phoneId model.formErrors then
                         "1px solid red"
 
                      else
@@ -770,8 +770,8 @@ view model =
                 , HE.onInput SetPhone
                 ]
                 []
-            , Error.byFieldName phoneId model.formErrors
-                |> Error.withStandaloneField
+            , ErrorUtil.byFieldName phoneId model.formErrors
+                |> ErrorUtil.withStandaloneField
             ]
         , Html.hr [ HA.class "my-4" ] []
         , Html.div
@@ -786,7 +786,7 @@ view model =
                 [ HA.type_ "text"
                 , HA.class "w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400"
                 , HA.style "border"
-                    (if Error.hasError cardId model.formErrors then
+                    (if ErrorUtil.hasError cardId model.formErrors then
                         "1px solid red"
 
                      else
@@ -797,15 +797,15 @@ view model =
                 , HE.onInput SetCardNumber
                 ]
                 []
-            , Error.byFieldName cardId model.formErrors
-                |> Error.withStandaloneField
+            , ErrorUtil.byFieldName cardId model.formErrors
+                |> ErrorUtil.withStandaloneField
             , Html.div
                 [ HA.class "flex gap-2 mt-2" ]
                 [ Html.input
                     [ HA.type_ "text"
                     , HA.class "w-24 p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400"
                     , HA.style "border"
-                        (if Error.hasError cvcId model.formErrors then
+                        (if ErrorUtil.hasError cvcId model.formErrors then
                             "1px solid red"
 
                          else
@@ -820,7 +820,7 @@ view model =
                     [ HA.type_ "text"
                     , HA.class "flex-1 p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400"
                     , HA.style "border"
-                        (if Error.hasError expiryId model.formErrors then
+                        (if ErrorUtil.hasError expiryId model.formErrors then
                             "1px solid red"
 
                          else
@@ -832,10 +832,10 @@ view model =
                     ]
                     []
                 ]
-            , Error.byFieldName cvcId model.formErrors
-                |> Error.withStandaloneField
-            , Error.byFieldName expiryId model.formErrors
-                |> Error.withStandaloneField
+            , ErrorUtil.byFieldName cvcId model.formErrors
+                |> ErrorUtil.withStandaloneField
+            , ErrorUtil.byFieldName expiryId model.formErrors
+                |> ErrorUtil.withStandaloneField
             ]
         , Html.hr [ HA.class "my-4" ] []
         , Html.div
@@ -850,7 +850,7 @@ view model =
                 [ HA.type_ "text"
                 , HA.class "w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400"
                 , HA.style "border"
-                    (if Error.hasError alphaOnlyId model.formErrors then
+                    (if ErrorUtil.hasError alphaOnlyId model.formErrors then
                         "1px solid red"
 
                      else
@@ -861,8 +861,8 @@ view model =
                 , HE.onInput SetAlphaOnly
                 ]
                 []
-            , Error.byFieldName alphaOnlyId model.formErrors
-                |> Error.withStandaloneField
+            , ErrorUtil.byFieldName alphaOnlyId model.formErrors
+                |> ErrorUtil.withStandaloneField
             ]
         , Html.hr [ HA.class "my-4" ] []
         , Html.div
@@ -890,8 +890,8 @@ view model =
                     )
                     skillOptions
                 )
-            , Error.byFieldName skillsFieldId model.formErrors
-                |> Error.withStandaloneField
+            , ErrorUtil.byFieldName skillsFieldId model.formErrors
+                |> ErrorUtil.withStandaloneField
             ]
         , Html.hr [ HA.class "my-4" ] []
         , Html.div
@@ -903,7 +903,7 @@ view model =
                 [ HA.type_ "text"
                 , HA.class "w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400"
                 , HA.style "border"
-                    (if Error.hasError requiredNoteId model.formErrors then
+                    (if ErrorUtil.hasError requiredNoteId model.formErrors then
                         "1px solid red"
 
                      else
@@ -914,8 +914,8 @@ view model =
                 , HE.onInput SetRequiredNote
                 ]
                 []
-            , Error.byFieldName requiredNoteId model.formErrors
-                |> Error.withStandaloneField
+            , ErrorUtil.byFieldName requiredNoteId model.formErrors
+                |> ErrorUtil.withStandaloneField
             ]
         , Html.hr [ HA.class "my-4" ] []
         , Html.div
@@ -927,7 +927,7 @@ view model =
                 [ HA.id choosableFieldId
                 , HA.class "w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400"
                 , HA.style "border"
-                    (if Error.hasError choosableFieldId model.formErrors then
+                    (if ErrorUtil.hasError choosableFieldId model.formErrors then
                         "1px solid red"
 
                      else
@@ -942,8 +942,8 @@ view model =
                 , Html.option [ HA.value "option2" ] [ Html.text "Option 2" ]
                 , Html.option [ HA.value "option3" ] [ Html.text "Option 3" ]
                 ]
-            , Error.byFieldName choosableFieldId model.formErrors
-                |> Error.withStandaloneField
+            , ErrorUtil.byFieldName choosableFieldId model.formErrors
+                |> ErrorUtil.withStandaloneField
             ]
         , Html.hr [ HA.class "my-4" ] []
         , Html.div
@@ -969,7 +969,7 @@ view model =
                 [ HA.type_ "text"
                 , HA.class "w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400"
                 , HA.style "border"
-                    (if Error.hasError "" model.formErrors then
+                    (if ErrorUtil.hasError "" model.formErrors then
                         "1px solid red"
 
                      else
@@ -1007,8 +1007,8 @@ view model =
 
               else
                 Html.text ""
-            , Error.byFieldName "" model.formErrors
-                |> Error.withStandaloneField
+            , ErrorUtil.byFieldName "" model.formErrors
+                |> ErrorUtil.withStandaloneField
             ]
         , Html.button
             [ HA.type_ "button"

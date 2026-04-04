@@ -10,7 +10,7 @@ module Validation exposing
 
 import Dict exposing (Dict)
 import Time
-import Util
+import Utils
 
 
 type alias Config =
@@ -101,7 +101,7 @@ validationToErrorMsg validation =
             "Company name is empty"
 
         CheckFileSize size value ->
-            "File size must be less than " ++ Util.bytesToKilobytes size ++ ". Size of your file is: " ++ Util.bytesToKilobytes (Util.calculateFileSizeInBytes value)
+            "File size must be less than " ++ Utils.bytesToKilobytes size ++ ". Size of your file is: " ++ Utils.bytesToKilobytes (Utils.calculateFileSizeInBytes value)
 
         CheckFileType fileTypes value ->
             "File type must be one of the following: " ++ String.join ", " fileTypes
@@ -218,22 +218,22 @@ shouldInsertError : Validation -> Bool
 shouldInsertError validation =
     case validation of
         CheckInvalidField field ->
-            Util.checkEmpty field
+            Utils.checkEmpty field
 
         InvalidChoosableField field ->
-            Util.checkEmpty field
+            Utils.checkEmpty field
 
         SpecialCharacter input ->
-            Util.checkAllSpecChar input
+            Utils.checkAllSpecChar input
 
         CheckForIntInInput input ->
             String.any Char.isDigit input
 
         CheckEmptyEmail email ->
-            Util.checkEmpty email
+            Utils.checkEmpty email
 
         CheckInvalidEmail email ->
-            not <| Util.isValidEmail email
+            not <| Utils.isValidEmail email
 
         CheckStringTooShort minimum str ->
             String.length str < minimum
@@ -242,64 +242,64 @@ shouldInsertError validation =
             String.length str > maximum
 
         CheckEmptyName name ->
-            Util.checkEmpty name
+            Utils.checkEmpty name
 
         CheckFileSize size value ->
-            Util.checkFileSize size value
+            Utils.checkFileSize size value
 
         CheckFileType fileTypes value ->
-            Util.checkFileType fileTypes value
+            Utils.checkFileType fileTypes value
 
         CheckEmptyPassword password ->
-            Util.checkEmpty password
+            Utils.checkEmpty password
 
         CheckPasswordTooShort minimum password ->
-            Util.checkLength password minimum
+            Utils.checkLength password minimum
 
         CheckPasswordCapitalize password ->
-            not <| Util.checkCapitalized password
+            not <| Utils.checkCapitalized password
 
         CheckForBusiness email ->
-            not <| Util.checkForBusinessEmail email
+            not <| Utils.checkForBusinessEmail email
 
         CheckPasswordSpecialChar password ->
-            not <| Util.checkSpecChar password
+            not <| Utils.checkSpecChar password
 
         CheckPasswordContainsInt password ->
-            not <| Util.checkInt password
+            not <| Utils.checkInt password
 
         CheckPasswordMatch password confirmPassword ->
-            not <| Util.checkMatch password confirmPassword
+            not <| Utils.checkMatch password confirmPassword
 
         CheckEmptyCvc cvc ->
-            Util.checkEmpty cvc
+            Utils.checkEmpty cvc
 
         CheckCvcLength cvc ->
-            Util.checkCvc cvc
+            Utils.checkCvc cvc
 
         CheckEmptyExparation e ->
-            Util.checkEmpty e
+            Utils.checkEmpty e
 
         CheckExparation currentZone currentDate exparationDate ->
-            not <| Util.checkExpiration currentZone currentDate exparationDate
+            not <| Utils.checkExpiration currentZone currentDate exparationDate
 
         CheckEmptyPhoneNumber pn ->
-            Util.checkEmpty pn
+            Utils.checkEmpty pn
 
         CheckEmptyCard c ->
-            Util.checkEmpty c
+            Utils.checkEmpty c
 
         CheckCard c ->
-            not <| Util.checkCard c
+            not <| Utils.checkCard c
 
         CheckPhoneNumber pn ->
-            not <| Util.checkPhone pn
+            not <| Utils.checkPhone pn
 
         CheckEmptyCompany c ->
-            Util.checkEmpty c
+            Utils.checkEmpty c
 
         CheckName n ->
-            not <| Util.checkName n
+            not <| Utils.checkName n
 
         CheckShouldMatch lst s ->
             let
