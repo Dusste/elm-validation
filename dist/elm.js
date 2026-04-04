@@ -4783,7 +4783,7 @@ var $elm$core$Set$toList = function (_v0) {
 	return $elm$core$Dict$keys(dict);
 };
 var $elm$core$Basics$GT = {$: 'GT'};
-var $author$project$Main$GotClock = function (a) {
+var $author$project$Demo$GotClock = function (a) {
 	return {$: 'GotClock', a: a};
 };
 var $elm$core$Result$Err = function (a) {
@@ -5509,7 +5509,7 @@ var $elm$time$Time$customZone = $elm$time$Time$Zone;
 var $elm$time$Time$here = _Time_here(_Utils_Tuple0);
 var $elm$core$Dict$RBEmpty_elm_builtin = {$: 'RBEmpty_elm_builtin'};
 var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
-var $author$project$Main$initialModel = {
+var $author$project$Demo$initialModel = {
 	alphaOnly: '',
 	attachment: $elm$core$Maybe$Nothing,
 	businessEmail: '',
@@ -5549,7 +5549,7 @@ var $elm$core$Tuple$pair = F2(
 	function (a, b) {
 		return _Utils_Tuple2(a, b);
 	});
-var $author$project$Main$Tick = function (a) {
+var $author$project$Demo$Tick = function (a) {
 	return {$: 'Tick', a: a};
 };
 var $elm$time$Time$Every = F2(
@@ -5949,14 +5949,14 @@ var $elm$time$Time$every = F2(
 		return $elm$time$Time$subscription(
 			A2($elm$time$Time$Every, interval, tagger));
 	});
-var $author$project$Main$subscriptions = function (_v0) {
-	return A2($elm$time$Time$every, 60000, $author$project$Main$Tick);
+var $author$project$Demo$subscriptions = function (_v0) {
+	return A2($elm$time$Time$every, 60000, $author$project$Demo$Tick);
 };
-var $author$project$Main$AttachFileRead = F3(
+var $author$project$Demo$AttachFileRead = F3(
 	function (a, b, c) {
 		return {$: 'AttachFileRead', a: a, b: b, c: c};
 	});
-var $author$project$Main$AttachFileRequestProceed = F2(
+var $author$project$Demo$AttachFileRequestProceed = F2(
 	function (a, b) {
 		return {$: 'AttachFileRequestProceed', a: a, b: b};
 	});
@@ -6063,7 +6063,7 @@ var $author$project$Validation$InvalidChoosableField = function (a) {
 var $author$project$Validation$SpecialCharacter = function (a) {
 	return {$: 'SpecialCharacter', a: a};
 };
-var $author$project$Main$alphaOnlyId = 'alpha_only_id';
+var $author$project$Demo$alphaOnlyId = 'alpha_only_id';
 var $elm$core$Maybe$andThen = F2(
 	function (callback, maybeValue) {
 		if (maybeValue.$ === 'Just') {
@@ -6125,7 +6125,7 @@ var $author$project$Validation$anyActiveError = function (errors) {
 		$elm$core$List$isEmpty,
 		$elm$core$Dict$values(errors));
 };
-var $author$project$Main$attachmentId = 'attachment_id';
+var $author$project$Demo$attachmentId = 'attachment_id';
 var $elm$core$Task$onError = _Scheduler_onError;
 var $elm$core$Task$attempt = F2(
 	function (resultToMessage, task) {
@@ -6145,8 +6145,8 @@ var $elm$core$Task$attempt = F2(
 							$elm$core$Result$Ok),
 						task))));
 	});
-var $author$project$Main$businessEmailId = 'business_email_id';
-var $author$project$Main$cardId = 'card_id';
+var $author$project$Demo$businessEmailId = 'business_email_id';
+var $author$project$Demo$cardId = 'card_id';
 var $elm$core$List$append = F2(
 	function (xs, ys) {
 		if (!ys.b) {
@@ -7517,11 +7517,11 @@ var $author$project$Validation$checkErrors = function (_v0) {
 			_List_Nil,
 			validationRules));
 };
-var $author$project$Main$choosableFieldId = 'choosable_field_id';
-var $author$project$Main$companyId = 'company_id';
-var $author$project$Main$confirmPasswordId = 'confirm_password_id';
-var $author$project$Main$cvcId = 'cvc_id';
-var $author$project$Main$expiryId = 'expiry_id';
+var $author$project$Demo$choosableFieldId = 'choosable_field_id';
+var $author$project$Demo$companyId = 'company_id';
+var $author$project$Demo$confirmPasswordId = 'confirm_password_id';
+var $author$project$Demo$cvcId = 'cvc_id';
+var $author$project$Demo$expiryId = 'expiry_id';
 var $elm$file$File$Select$file = F2(
 	function (mimes, toMsg) {
 		return A2(
@@ -7529,13 +7529,13 @@ var $elm$file$File$Select$file = F2(
 			toMsg,
 			_File_uploadOne(mimes));
 	});
-var $author$project$Main$fullNameId = 'full_name_id';
+var $author$project$Demo$fullNameId = 'full_name_id';
 var $elm$file$File$name = _File_name;
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
-var $author$project$Main$passwordId = 'password_id';
-var $author$project$Main$phoneId = 'phone_id';
-var $author$project$Main$requiredNoteId = 'required_note_id';
+var $author$project$Demo$passwordId = 'password_id';
+var $author$project$Demo$phoneId = 'phone_id';
+var $author$project$Demo$requiredNoteId = 'required_note_id';
 var $author$project$Validation$resetErrorsPerField = F2(
 	function (key, errors) {
 		return A2(
@@ -7546,12 +7546,12 @@ var $author$project$Validation$resetErrorsPerField = F2(
 				}),
 			errors);
 	});
-var $author$project$Main$skillsFieldId = 'skills_field_id';
-var $author$project$Main$slugId = 'slug_id';
-var $author$project$Main$textInputId = 'text_input_id';
-var $author$project$Main$textareaId = 'textarea_id';
+var $author$project$Demo$skillsFieldId = 'skills_field_id';
+var $author$project$Demo$slugId = 'slug_id';
+var $author$project$Demo$textInputId = 'text_input_id';
+var $author$project$Demo$textareaId = 'textarea_id';
 var $elm$file$File$toUrl = _File_toUrl;
-var $author$project$Main$update = F2(
+var $author$project$Demo$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 'GotClock':
@@ -7581,7 +7581,7 @@ var $author$project$Main$update = F2(
 					_Utils_update(
 						model,
 						{
-							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$passwordId, model.formErrors),
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Demo$passwordId, model.formErrors),
 							password: value
 						}),
 					$elm$core$Platform$Cmd$none);
@@ -7592,7 +7592,7 @@ var $author$project$Main$update = F2(
 						model,
 						{
 							confirmPassword: value,
-							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$confirmPasswordId, model.formErrors)
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Demo$confirmPasswordId, model.formErrors)
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 'SetBusinessEmail':
@@ -7602,7 +7602,7 @@ var $author$project$Main$update = F2(
 						model,
 						{
 							businessEmail: value,
-							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$businessEmailId, model.formErrors)
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Demo$businessEmailId, model.formErrors)
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 'SetFullName':
@@ -7611,7 +7611,7 @@ var $author$project$Main$update = F2(
 					_Utils_update(
 						model,
 						{
-							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$fullNameId, model.formErrors),
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Demo$fullNameId, model.formErrors),
 							fullName: value
 						}),
 					$elm$core$Platform$Cmd$none);
@@ -7621,7 +7621,7 @@ var $author$project$Main$update = F2(
 					_Utils_update(
 						model,
 						{
-							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$phoneId, model.formErrors),
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Demo$phoneId, model.formErrors),
 							phone: value
 						}),
 					$elm$core$Platform$Cmd$none);
@@ -7632,7 +7632,7 @@ var $author$project$Main$update = F2(
 						model,
 						{
 							cardNumber: value,
-							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$cardId, model.formErrors)
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Demo$cardId, model.formErrors)
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 'SetCvc':
@@ -7642,7 +7642,7 @@ var $author$project$Main$update = F2(
 						model,
 						{
 							cvc: value,
-							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$cvcId, model.formErrors)
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Demo$cvcId, model.formErrors)
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 'SetExpiry':
@@ -7652,7 +7652,7 @@ var $author$project$Main$update = F2(
 						model,
 						{
 							expiry: value,
-							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$expiryId, model.formErrors)
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Demo$expiryId, model.formErrors)
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 'SetAlphaOnly':
@@ -7662,7 +7662,7 @@ var $author$project$Main$update = F2(
 						model,
 						{
 							alphaOnly: value,
-							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$alphaOnlyId, model.formErrors)
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Demo$alphaOnlyId, model.formErrors)
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 'SetSlug':
@@ -7671,7 +7671,7 @@ var $author$project$Main$update = F2(
 					_Utils_update(
 						model,
 						{
-							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$slugId, model.formErrors),
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Demo$slugId, model.formErrors),
 							slug: value
 						}),
 					$elm$core$Platform$Cmd$none);
@@ -7687,7 +7687,7 @@ var $author$project$Main$update = F2(
 					_Utils_update(
 						model,
 						{
-							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$skillsFieldId, model.formErrors),
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Demo$skillsFieldId, model.formErrors),
 							selectedSkills: nextSkills
 						}),
 					$elm$core$Platform$Cmd$none);
@@ -7698,7 +7698,7 @@ var $author$project$Main$update = F2(
 						model,
 						{
 							company: value,
-							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$companyId, model.formErrors)
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Demo$companyId, model.formErrors)
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 'SetRequiredNote':
@@ -7707,13 +7707,13 @@ var $author$project$Main$update = F2(
 					_Utils_update(
 						model,
 						{
-							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$requiredNoteId, model.formErrors),
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Demo$requiredNoteId, model.formErrors),
 							requiredNote: value
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 'SetTextInputValue':
 				var value = msg.a;
-				var resetErrorsPerField = A2($author$project$Validation$resetErrorsPerField, $author$project$Main$textInputId, model.formErrors);
+				var resetErrorsPerField = A2($author$project$Validation$resetErrorsPerField, $author$project$Demo$textInputId, model.formErrors);
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
@@ -7721,7 +7721,7 @@ var $author$project$Main$update = F2(
 					$elm$core$Platform$Cmd$none);
 			case 'SetTextareaValue':
 				var value = msg.a;
-				var resetErrorsPerField = A2($author$project$Validation$resetErrorsPerField, $author$project$Main$textareaId, model.formErrors);
+				var resetErrorsPerField = A2($author$project$Validation$resetErrorsPerField, $author$project$Demo$textareaId, model.formErrors);
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
@@ -7729,7 +7729,7 @@ var $author$project$Main$update = F2(
 					$elm$core$Platform$Cmd$none);
 			case 'SetChoosableValue':
 				var value = msg.a;
-				var resetErrorsPerField = A2($author$project$Validation$resetErrorsPerField, $author$project$Main$choosableFieldId, model.formErrors);
+				var resetErrorsPerField = A2($author$project$Validation$resetErrorsPerField, $author$project$Demo$choosableFieldId, model.formErrors);
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
@@ -7758,7 +7758,7 @@ var $author$project$Main$update = F2(
 					validationRules: _List_fromArray(
 						[
 							{
-							fieldName: $author$project$Main$textareaId,
+							fieldName: $author$project$Demo$textareaId,
 							fieldRules: _List_fromArray(
 								[
 									$author$project$Validation$CheckStringTooShort(20),
@@ -7767,7 +7767,7 @@ var $author$project$Main$update = F2(
 							fieldValue: model.textareaValue
 						},
 							{
-							fieldName: $author$project$Main$attachmentId,
+							fieldName: $author$project$Demo$attachmentId,
 							fieldRules: _List_fromArray(
 								[
 									$author$project$Validation$CheckFileSize(300000),
@@ -7786,13 +7786,13 @@ var $author$project$Main$update = F2(
 									model.attachment))
 						},
 							{
-							fieldName: $author$project$Main$textInputId,
+							fieldName: $author$project$Demo$textInputId,
 							fieldRules: _List_fromArray(
 								[$author$project$Validation$CheckEmptyEmail, $author$project$Validation$CheckInvalidEmail]),
 							fieldValue: model.textInputValue
 						},
 							{
-							fieldName: $author$project$Main$choosableFieldId,
+							fieldName: $author$project$Demo$choosableFieldId,
 							fieldRules: _List_fromArray(
 								[$author$project$Validation$InvalidChoosableField]),
 							fieldValue: model.choosableValue
@@ -7820,7 +7820,7 @@ var $author$project$Main$update = F2(
 									model.selectedUser))
 						},
 							{
-							fieldName: $author$project$Main$passwordId,
+							fieldName: $author$project$Demo$passwordId,
 							fieldRules: _List_fromArray(
 								[
 									$author$project$Validation$CheckEmptyPassword,
@@ -7832,7 +7832,7 @@ var $author$project$Main$update = F2(
 							fieldValue: model.password
 						},
 							{
-							fieldName: $author$project$Main$confirmPasswordId,
+							fieldName: $author$project$Demo$confirmPasswordId,
 							fieldRules: _List_fromArray(
 								[
 									function (confirm) {
@@ -7842,44 +7842,44 @@ var $author$project$Main$update = F2(
 							fieldValue: model.confirmPassword
 						},
 							{
-							fieldName: $author$project$Main$businessEmailId,
+							fieldName: $author$project$Demo$businessEmailId,
 							fieldRules: _List_fromArray(
 								[$author$project$Validation$CheckEmptyEmail, $author$project$Validation$CheckInvalidEmail, $author$project$Validation$CheckForBusiness]),
 							fieldValue: model.businessEmail
 						},
 							{
-							fieldName: $author$project$Main$fullNameId,
+							fieldName: $author$project$Demo$fullNameId,
 							fieldRules: _List_fromArray(
 								[$author$project$Validation$CheckEmptyName, $author$project$Validation$CheckName]),
 							fieldValue: model.fullName
 						},
 							{
-							fieldName: $author$project$Main$phoneId,
+							fieldName: $author$project$Demo$phoneId,
 							fieldRules: _List_fromArray(
 								[$author$project$Validation$CheckEmptyPhoneNumber, $author$project$Validation$CheckPhoneNumber]),
 							fieldValue: model.phone
 						},
 							{
-							fieldName: $author$project$Main$cardId,
+							fieldName: $author$project$Demo$cardId,
 							fieldRules: _List_fromArray(
 								[$author$project$Validation$CheckEmptyCard, $author$project$Validation$CheckCard]),
 							fieldValue: model.cardNumber
 						},
 							{
-							fieldName: $author$project$Main$cvcId,
+							fieldName: $author$project$Demo$cvcId,
 							fieldRules: _List_fromArray(
 								[$author$project$Validation$CheckEmptyCvc, $author$project$Validation$CheckCvcLength]),
 							fieldValue: model.cvc
 						},
-							{fieldName: $author$project$Main$expiryId, fieldRules: expiryRules, fieldValue: model.expiry},
+							{fieldName: $author$project$Demo$expiryId, fieldRules: expiryRules, fieldValue: model.expiry},
 							{
-							fieldName: $author$project$Main$alphaOnlyId,
+							fieldName: $author$project$Demo$alphaOnlyId,
 							fieldRules: _List_fromArray(
 								[$author$project$Validation$CheckForIntInInput, $author$project$Validation$SpecialCharacter]),
 							fieldValue: model.alphaOnly
 						},
 							{
-							fieldName: $author$project$Main$slugId,
+							fieldName: $author$project$Demo$slugId,
 							fieldRules: _List_fromArray(
 								[
 									$author$project$Validation$CheckInvalidField,
@@ -7890,7 +7890,7 @@ var $author$project$Main$update = F2(
 							fieldValue: model.slug
 						},
 							{
-							fieldName: $author$project$Main$skillsFieldId,
+							fieldName: $author$project$Demo$skillsFieldId,
 							fieldRules: _List_fromArray(
 								[
 									function (_v2) {
@@ -7900,13 +7900,13 @@ var $author$project$Main$update = F2(
 							fieldValue: ''
 						},
 							{
-							fieldName: $author$project$Main$companyId,
+							fieldName: $author$project$Demo$companyId,
 							fieldRules: _List_fromArray(
 								[$author$project$Validation$CheckEmptyCompany]),
 							fieldValue: model.company
 						},
 							{
-							fieldName: $author$project$Main$requiredNoteId,
+							fieldName: $author$project$Demo$requiredNoteId,
 							fieldRules: _List_fromArray(
 								[$author$project$Validation$CheckInvalidField]),
 							fieldValue: model.requiredNote
@@ -7930,7 +7930,7 @@ var $author$project$Main$update = F2(
 						$elm$file$File$Select$file,
 						_List_fromArray(
 							['text/pdf', 'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'application/msword', 'application/vnd.ms-excel', 'application/vnd.ms-powerpoint', 'application/vnd.ms-office', 'image/png', 'image/jpeg']),
-						$author$project$Main$AttachFileRequestProceed(id)));
+						$author$project$Demo$AttachFileRequestProceed(id)));
 			case 'AttachFileRequestProceed':
 				var key = msg.a;
 				var file = msg.b;
@@ -7939,7 +7939,7 @@ var $author$project$Main$update = F2(
 					A2(
 						$elm$core$Task$attempt,
 						A2(
-							$author$project$Main$AttachFileRead,
+							$author$project$Demo$AttachFileRead,
 							key,
 							$elm$file$File$name(file)),
 						$elm$file$File$toUrl(file)));
@@ -7983,62 +7983,56 @@ var $author$project$Main$update = F2(
 					$elm$core$Platform$Cmd$none);
 		}
 	});
-var $author$project$Main$SelectUser = function (a) {
+var $author$project$Demo$SelectUser = function (a) {
 	return {$: 'SelectUser', a: a};
 };
-var $author$project$Main$SetAlphaOnly = function (a) {
+var $author$project$Demo$SetAlphaOnly = function (a) {
 	return {$: 'SetAlphaOnly', a: a};
 };
-var $author$project$Main$SetBusinessEmail = function (a) {
+var $author$project$Demo$SetBusinessEmail = function (a) {
 	return {$: 'SetBusinessEmail', a: a};
 };
-var $author$project$Main$SetCardNumber = function (a) {
+var $author$project$Demo$SetCardNumber = function (a) {
 	return {$: 'SetCardNumber', a: a};
 };
-var $author$project$Main$SetChoosableValue = function (a) {
+var $author$project$Demo$SetChoosableValue = function (a) {
 	return {$: 'SetChoosableValue', a: a};
 };
-var $author$project$Main$SetCompany = function (a) {
-	return {$: 'SetCompany', a: a};
-};
-var $author$project$Main$SetConfirmPassword = function (a) {
+var $author$project$Demo$SetConfirmPassword = function (a) {
 	return {$: 'SetConfirmPassword', a: a};
 };
-var $author$project$Main$SetCvc = function (a) {
+var $author$project$Demo$SetCvc = function (a) {
 	return {$: 'SetCvc', a: a};
 };
-var $author$project$Main$SetExpiry = function (a) {
+var $author$project$Demo$SetExpiry = function (a) {
 	return {$: 'SetExpiry', a: a};
 };
-var $author$project$Main$SetFullName = function (a) {
+var $author$project$Demo$SetFullName = function (a) {
 	return {$: 'SetFullName', a: a};
 };
-var $author$project$Main$SetPassword = function (a) {
+var $author$project$Demo$SetPassword = function (a) {
 	return {$: 'SetPassword', a: a};
 };
-var $author$project$Main$SetPhone = function (a) {
+var $author$project$Demo$SetPhone = function (a) {
 	return {$: 'SetPhone', a: a};
 };
-var $author$project$Main$SetRequiredNote = function (a) {
+var $author$project$Demo$SetRequiredNote = function (a) {
 	return {$: 'SetRequiredNote', a: a};
 };
-var $author$project$Main$SetSearchUsersValue = function (a) {
+var $author$project$Demo$SetSearchUsersValue = function (a) {
 	return {$: 'SetSearchUsersValue', a: a};
 };
-var $author$project$Main$SetSlug = function (a) {
-	return {$: 'SetSlug', a: a};
-};
-var $author$project$Main$SetTextInputValue = function (a) {
+var $author$project$Demo$SetTextInputValue = function (a) {
 	return {$: 'SetTextInputValue', a: a};
 };
-var $author$project$Main$SetTextareaValue = function (a) {
+var $author$project$Demo$SetTextareaValue = function (a) {
 	return {$: 'SetTextareaValue', a: a};
 };
-var $author$project$Main$Submit = {$: 'Submit'};
-var $author$project$Main$ToggleSkill = function (a) {
+var $author$project$Demo$Submit = {$: 'Submit'};
+var $author$project$Demo$ToggleSkill = function (a) {
 	return {$: 'ToggleSkill', a: a};
 };
-var $author$project$Main$TriggerAttachFile = function (a) {
+var $author$project$Demo$TriggerAttachFile = function (a) {
 	return {$: 'TriggerAttachFile', a: a};
 };
 var $elm$html$Html$button = _VirtualDom_node('button');
@@ -8146,7 +8140,7 @@ var $elm$html$Html$option = _VirtualDom_node('option');
 var $elm$html$Html$p = _VirtualDom_node('p');
 var $elm$html$Html$Attributes$placeholder = $elm$html$Html$Attributes$stringProperty('placeholder');
 var $elm$html$Html$select = _VirtualDom_node('select');
-var $author$project$Main$skillOptions = _List_fromArray(
+var $author$project$Demo$skillOptions = _List_fromArray(
 	['Elm', 'TypeScript', 'Rust', 'Python']);
 var $elm$html$Html$span = _VirtualDom_node('span');
 var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
@@ -8196,7 +8190,7 @@ var $author$project$Error$withStandaloneField = function (lst) {
 			},
 			lst));
 };
-var $author$project$Main$view = function (model) {
+var $author$project$Demo$view = function (model) {
 	return A2(
 		$elm$html$Html$div,
 		_List_fromArray(
@@ -8244,19 +8238,19 @@ var $author$project$Main$view = function (model) {
 						$elm$html$Html$textarea,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$id($author$project$Main$textareaId),
+								$elm$html$Html$Attributes$id($author$project$Demo$textareaId),
 								$elm$html$Html$Attributes$class('w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400 min-h-[100px]'),
 								A2(
 								$elm$html$Html$Attributes$style,
 								'border',
-								A2($author$project$Error$hasError, $author$project$Main$textareaId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+								A2($author$project$Error$hasError, $author$project$Demo$textareaId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
 								$elm$html$Html$Attributes$placeholder('Enter your text here'),
 								$elm$html$Html$Attributes$value(model.textareaValue),
-								$elm$html$Html$Events$onInput($author$project$Main$SetTextareaValue)
+								$elm$html$Html$Events$onInput($author$project$Demo$SetTextareaValue)
 							]),
 						_List_Nil),
 						$author$project$Error$withStandaloneField(
-						A2($author$project$Error$byFieldName, $author$project$Main$textareaId, model.formErrors))
+						A2($author$project$Error$byFieldName, $author$project$Demo$textareaId, model.formErrors))
 					])),
 				A2(
 				$elm$html$Html$hr,
@@ -8290,7 +8284,7 @@ var $author$project$Main$view = function (model) {
 								$elm$html$Html$Attributes$type_('button'),
 								$elm$html$Html$Attributes$class('bg-gray-200 border border-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-300'),
 								$elm$html$Html$Events$onClick(
-								$author$project$Main$TriggerAttachFile($author$project$Main$attachmentId))
+								$author$project$Demo$TriggerAttachFile($author$project$Demo$attachmentId))
 							]),
 						_List_fromArray(
 							[
@@ -8315,7 +8309,7 @@ var $author$project$Main$view = function (model) {
 						}
 					}(),
 						$author$project$Error$withStandaloneField(
-						A2($author$project$Error$byFieldName, $author$project$Main$attachmentId, model.formErrors))
+						A2($author$project$Error$byFieldName, $author$project$Demo$attachmentId, model.formErrors))
 					])),
 				A2(
 				$elm$html$Html$hr,
@@ -8351,14 +8345,14 @@ var $author$project$Main$view = function (model) {
 								A2(
 								$elm$html$Html$Attributes$style,
 								'border',
-								A2($author$project$Error$hasError, $author$project$Main$textInputId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+								A2($author$project$Error$hasError, $author$project$Demo$textInputId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
 								$elm$html$Html$Attributes$placeholder('Enter your email here'),
 								$elm$html$Html$Attributes$value(model.textInputValue),
-								$elm$html$Html$Events$onInput($author$project$Main$SetTextInputValue)
+								$elm$html$Html$Events$onInput($author$project$Demo$SetTextInputValue)
 							]),
 						_List_Nil),
 						$author$project$Error$withStandaloneField(
-						A2($author$project$Error$byFieldName, $author$project$Main$textInputId, model.formErrors))
+						A2($author$project$Error$byFieldName, $author$project$Demo$textInputId, model.formErrors))
 					])),
 				A2(
 				$elm$html$Html$hr,
@@ -8404,14 +8398,14 @@ var $author$project$Main$view = function (model) {
 								A2(
 								$elm$html$Html$Attributes$style,
 								'border',
-								A2($author$project$Error$hasError, $author$project$Main$businessEmailId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+								A2($author$project$Error$hasError, $author$project$Demo$businessEmailId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
 								$elm$html$Html$Attributes$placeholder('you@company.com'),
 								$elm$html$Html$Attributes$value(model.businessEmail),
-								$elm$html$Html$Events$onInput($author$project$Main$SetBusinessEmail)
+								$elm$html$Html$Events$onInput($author$project$Demo$SetBusinessEmail)
 							]),
 						_List_Nil),
 						$author$project$Error$withStandaloneField(
-						A2($author$project$Error$byFieldName, $author$project$Main$businessEmailId, model.formErrors))
+						A2($author$project$Error$byFieldName, $author$project$Demo$businessEmailId, model.formErrors))
 					])),
 				A2(
 				$elm$html$Html$hr,
@@ -8447,14 +8441,14 @@ var $author$project$Main$view = function (model) {
 								A2(
 								$elm$html$Html$Attributes$style,
 								'border',
-								A2($author$project$Error$hasError, $author$project$Main$passwordId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+								A2($author$project$Error$hasError, $author$project$Demo$passwordId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
 								$elm$html$Html$Attributes$placeholder('Password (10+ chars, cap, number, special)'),
 								$elm$html$Html$Attributes$value(model.password),
-								$elm$html$Html$Events$onInput($author$project$Main$SetPassword)
+								$elm$html$Html$Events$onInput($author$project$Demo$SetPassword)
 							]),
 						_List_Nil),
 						$author$project$Error$withStandaloneField(
-						A2($author$project$Error$byFieldName, $author$project$Main$passwordId, model.formErrors)),
+						A2($author$project$Error$byFieldName, $author$project$Demo$passwordId, model.formErrors)),
 						A2(
 						$elm$html$Html$input,
 						_List_fromArray(
@@ -8464,14 +8458,14 @@ var $author$project$Main$view = function (model) {
 								A2(
 								$elm$html$Html$Attributes$style,
 								'border',
-								A2($author$project$Error$hasError, $author$project$Main$confirmPasswordId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+								A2($author$project$Error$hasError, $author$project$Demo$confirmPasswordId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
 								$elm$html$Html$Attributes$placeholder('Confirm password'),
 								$elm$html$Html$Attributes$value(model.confirmPassword),
-								$elm$html$Html$Events$onInput($author$project$Main$SetConfirmPassword)
+								$elm$html$Html$Events$onInput($author$project$Demo$SetConfirmPassword)
 							]),
 						_List_Nil),
 						$author$project$Error$withStandaloneField(
-						A2($author$project$Error$byFieldName, $author$project$Main$confirmPasswordId, model.formErrors))
+						A2($author$project$Error$byFieldName, $author$project$Demo$confirmPasswordId, model.formErrors))
 					])),
 				A2(
 				$elm$html$Html$hr,
@@ -8507,14 +8501,14 @@ var $author$project$Main$view = function (model) {
 								A2(
 								$elm$html$Html$Attributes$style,
 								'border',
-								A2($author$project$Error$hasError, $author$project$Main$fullNameId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+								A2($author$project$Error$hasError, $author$project$Demo$fullNameId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
 								$elm$html$Html$Attributes$placeholder('Jane Doe'),
 								$elm$html$Html$Attributes$value(model.fullName),
-								$elm$html$Html$Events$onInput($author$project$Main$SetFullName)
+								$elm$html$Html$Events$onInput($author$project$Demo$SetFullName)
 							]),
 						_List_Nil),
 						$author$project$Error$withStandaloneField(
-						A2($author$project$Error$byFieldName, $author$project$Main$fullNameId, model.formErrors))
+						A2($author$project$Error$byFieldName, $author$project$Demo$fullNameId, model.formErrors))
 					])),
 				A2(
 				$elm$html$Html$hr,
@@ -8550,14 +8544,14 @@ var $author$project$Main$view = function (model) {
 								A2(
 								$elm$html$Html$Attributes$style,
 								'border',
-								A2($author$project$Error$hasError, $author$project$Main$phoneId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+								A2($author$project$Error$hasError, $author$project$Demo$phoneId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
 								$elm$html$Html$Attributes$placeholder('+1 234 567 8901'),
 								$elm$html$Html$Attributes$value(model.phone),
-								$elm$html$Html$Events$onInput($author$project$Main$SetPhone)
+								$elm$html$Html$Events$onInput($author$project$Demo$SetPhone)
 							]),
 						_List_Nil),
 						$author$project$Error$withStandaloneField(
-						A2($author$project$Error$byFieldName, $author$project$Main$phoneId, model.formErrors))
+						A2($author$project$Error$byFieldName, $author$project$Demo$phoneId, model.formErrors))
 					])),
 				A2(
 				$elm$html$Html$hr,
@@ -8603,14 +8597,14 @@ var $author$project$Main$view = function (model) {
 								A2(
 								$elm$html$Html$Attributes$style,
 								'border',
-								A2($author$project$Error$hasError, $author$project$Main$cardId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+								A2($author$project$Error$hasError, $author$project$Demo$cardId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
 								$elm$html$Html$Attributes$placeholder('Card number'),
 								$elm$html$Html$Attributes$value(model.cardNumber),
-								$elm$html$Html$Events$onInput($author$project$Main$SetCardNumber)
+								$elm$html$Html$Events$onInput($author$project$Demo$SetCardNumber)
 							]),
 						_List_Nil),
 						$author$project$Error$withStandaloneField(
-						A2($author$project$Error$byFieldName, $author$project$Main$cardId, model.formErrors)),
+						A2($author$project$Error$byFieldName, $author$project$Demo$cardId, model.formErrors)),
 						A2(
 						$elm$html$Html$div,
 						_List_fromArray(
@@ -8628,10 +8622,10 @@ var $author$project$Main$view = function (model) {
 										A2(
 										$elm$html$Html$Attributes$style,
 										'border',
-										A2($author$project$Error$hasError, $author$project$Main$cvcId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+										A2($author$project$Error$hasError, $author$project$Demo$cvcId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
 										$elm$html$Html$Attributes$placeholder('CVC'),
 										$elm$html$Html$Attributes$value(model.cvc),
-										$elm$html$Html$Events$onInput($author$project$Main$SetCvc)
+										$elm$html$Html$Events$onInput($author$project$Demo$SetCvc)
 									]),
 								_List_Nil),
 								A2(
@@ -8643,17 +8637,17 @@ var $author$project$Main$view = function (model) {
 										A2(
 										$elm$html$Html$Attributes$style,
 										'border',
-										A2($author$project$Error$hasError, $author$project$Main$expiryId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+										A2($author$project$Error$hasError, $author$project$Demo$expiryId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
 										$elm$html$Html$Attributes$placeholder('MM/YY'),
 										$elm$html$Html$Attributes$value(model.expiry),
-										$elm$html$Html$Events$onInput($author$project$Main$SetExpiry)
+										$elm$html$Html$Events$onInput($author$project$Demo$SetExpiry)
 									]),
 								_List_Nil)
 							])),
 						$author$project$Error$withStandaloneField(
-						A2($author$project$Error$byFieldName, $author$project$Main$cvcId, model.formErrors)),
+						A2($author$project$Error$byFieldName, $author$project$Demo$cvcId, model.formErrors)),
 						$author$project$Error$withStandaloneField(
-						A2($author$project$Error$byFieldName, $author$project$Main$expiryId, model.formErrors))
+						A2($author$project$Error$byFieldName, $author$project$Demo$expiryId, model.formErrors))
 					])),
 				A2(
 				$elm$html$Html$hr,
@@ -8699,67 +8693,14 @@ var $author$project$Main$view = function (model) {
 								A2(
 								$elm$html$Html$Attributes$style,
 								'border',
-								A2($author$project$Error$hasError, $author$project$Main$alphaOnlyId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+								A2($author$project$Error$hasError, $author$project$Demo$alphaOnlyId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
 								$elm$html$Html$Attributes$placeholder('letters and spaces only'),
 								$elm$html$Html$Attributes$value(model.alphaOnly),
-								$elm$html$Html$Events$onInput($author$project$Main$SetAlphaOnly)
+								$elm$html$Html$Events$onInput($author$project$Demo$SetAlphaOnly)
 							]),
 						_List_Nil),
 						$author$project$Error$withStandaloneField(
-						A2($author$project$Error$byFieldName, $author$project$Main$alphaOnlyId, model.formErrors))
-					])),
-				A2(
-				$elm$html$Html$hr,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('my-4')
-					]),
-				_List_Nil),
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('mt-2 flex flex-col gap-2')
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$elm$html$Html$h2,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('text-xl font-bold')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('Reserved slug (CheckInvalidField + CheckForDuplicate)')
-							])),
-						A2(
-						$elm$html$Html$p,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('text-sm text-gray-500')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('Try admin, api, or www — duplicates are rejected case-insensitively.')
-							])),
-						A2(
-						$elm$html$Html$input,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$type_('text'),
-								$elm$html$Html$Attributes$class('w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400'),
-								A2(
-								$elm$html$Html$Attributes$style,
-								'border',
-								A2($author$project$Error$hasError, $author$project$Main$slugId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
-								$elm$html$Html$Attributes$placeholder('project slug'),
-								$elm$html$Html$Attributes$value(model.slug),
-								$elm$html$Html$Events$onInput($author$project$Main$SetSlug)
-							]),
-						_List_Nil),
-						$author$project$Error$withStandaloneField(
-						A2($author$project$Error$byFieldName, $author$project$Main$slugId, model.formErrors))
+						A2($author$project$Error$byFieldName, $author$project$Demo$alphaOnlyId, model.formErrors))
 					])),
 				A2(
 				$elm$html$Html$hr,
@@ -8822,59 +8763,16 @@ var $author$project$Main$view = function (model) {
 													A2($elm$core$List$member, skill, model.selectedSkills)),
 													$elm$html$Html$Events$onCheck(
 													function (_v1) {
-														return $author$project$Main$ToggleSkill(skill);
+														return $author$project$Demo$ToggleSkill(skill);
 													})
 												]),
 											_List_Nil),
 											$elm$html$Html$text(skill)
 										]));
 							},
-							$author$project$Main$skillOptions)),
+							$author$project$Demo$skillOptions)),
 						$author$project$Error$withStandaloneField(
-						A2($author$project$Error$byFieldName, $author$project$Main$skillsFieldId, model.formErrors))
-					])),
-				A2(
-				$elm$html$Html$hr,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('my-4')
-					]),
-				_List_Nil),
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('mt-2 flex flex-col gap-2')
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$elm$html$Html$h2,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('text-xl font-bold')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('Company name (CheckEmptyCompany)')
-							])),
-						A2(
-						$elm$html$Html$input,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$type_('text'),
-								$elm$html$Html$Attributes$class('w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400'),
-								A2(
-								$elm$html$Html$Attributes$style,
-								'border',
-								A2($author$project$Error$hasError, $author$project$Main$companyId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
-								$elm$html$Html$Attributes$placeholder('Acme Inc.'),
-								$elm$html$Html$Attributes$value(model.company),
-								$elm$html$Html$Events$onInput($author$project$Main$SetCompany)
-							]),
-						_List_Nil),
-						$author$project$Error$withStandaloneField(
-						A2($author$project$Error$byFieldName, $author$project$Main$companyId, model.formErrors))
+						A2($author$project$Error$byFieldName, $author$project$Demo$skillsFieldId, model.formErrors))
 					])),
 				A2(
 				$elm$html$Html$hr,
@@ -8910,14 +8808,14 @@ var $author$project$Main$view = function (model) {
 								A2(
 								$elm$html$Html$Attributes$style,
 								'border',
-								A2($author$project$Error$hasError, $author$project$Main$requiredNoteId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+								A2($author$project$Error$hasError, $author$project$Demo$requiredNoteId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
 								$elm$html$Html$Attributes$placeholder('Any non-empty text'),
 								$elm$html$Html$Attributes$value(model.requiredNote),
-								$elm$html$Html$Events$onInput($author$project$Main$SetRequiredNote)
+								$elm$html$Html$Events$onInput($author$project$Demo$SetRequiredNote)
 							]),
 						_List_Nil),
 						$author$project$Error$withStandaloneField(
-						A2($author$project$Error$byFieldName, $author$project$Main$requiredNoteId, model.formErrors))
+						A2($author$project$Error$byFieldName, $author$project$Demo$requiredNoteId, model.formErrors))
 					])),
 				A2(
 				$elm$html$Html$hr,
@@ -8948,15 +8846,15 @@ var $author$project$Main$view = function (model) {
 						$elm$html$Html$select,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$id($author$project$Main$choosableFieldId),
+								$elm$html$Html$Attributes$id($author$project$Demo$choosableFieldId),
 								$elm$html$Html$Attributes$class('w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400'),
 								A2(
 								$elm$html$Html$Attributes$style,
 								'border',
-								A2($author$project$Error$hasError, $author$project$Main$choosableFieldId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+								A2($author$project$Error$hasError, $author$project$Demo$choosableFieldId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
 								$elm$html$Html$Attributes$placeholder('Select an option'),
 								$elm$html$Html$Attributes$value(model.choosableValue),
-								$elm$html$Html$Events$onInput($author$project$Main$SetChoosableValue)
+								$elm$html$Html$Events$onInput($author$project$Demo$SetChoosableValue)
 							]),
 						_List_fromArray(
 							[
@@ -9002,7 +8900,7 @@ var $author$project$Main$view = function (model) {
 									]))
 							])),
 						$author$project$Error$withStandaloneField(
-						A2($author$project$Error$byFieldName, $author$project$Main$choosableFieldId, model.formErrors))
+						A2($author$project$Error$byFieldName, $author$project$Demo$choosableFieldId, model.formErrors))
 					])),
 				A2(
 				$elm$html$Html$hr,
@@ -9098,7 +8996,7 @@ var $author$project$Main$view = function (model) {
 								A2($author$project$Error$hasError, '', model.formErrors) ? '1px solid red' : '1px solid #ccc'),
 								$elm$html$Html$Attributes$placeholder('Search users'),
 								$elm$html$Html$Attributes$value(model.searchUsersValue),
-								$elm$html$Html$Events$onInput($author$project$Main$SetSearchUsersValue)
+								$elm$html$Html$Events$onInput($author$project$Demo$SetSearchUsersValue)
 							]),
 						_List_Nil),
 						((model.searchUsersValue !== '') && model.isUsersDropdownOpen) ? A2(
@@ -9116,7 +9014,7 @@ var $author$project$Main$view = function (model) {
 										[
 											$elm$html$Html$Attributes$class('text-sm border-t border-gray-200 text-gray-500 cursor-pointer hover:bg-gray-100 p-2 first:border-t-0'),
 											$elm$html$Html$Events$onClick(
-											$author$project$Main$SelectUser(user))
+											$author$project$Demo$SelectUser(user))
 										]),
 									_List_fromArray(
 										[
@@ -9179,7 +9077,7 @@ var $author$project$Main$view = function (model) {
 					[
 						$elm$html$Html$Attributes$type_('button'),
 						$elm$html$Html$Attributes$class('bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'),
-						$elm$html$Html$Events$onClick($author$project$Main$Submit)
+						$elm$html$Html$Events$onClick($author$project$Demo$Submit)
 					]),
 				_List_fromArray(
 					[
@@ -9187,19 +9085,19 @@ var $author$project$Main$view = function (model) {
 					]))
 			]));
 };
-var $author$project$Main$main = $elm$browser$Browser$element(
+var $author$project$Demo$main = $elm$browser$Browser$element(
 	{
 		init: function (_v0) {
 			return _Utils_Tuple2(
-				$author$project$Main$initialModel,
+				$author$project$Demo$initialModel,
 				A2(
 					$elm$core$Task$perform,
-					$author$project$Main$GotClock,
+					$author$project$Demo$GotClock,
 					A3($elm$core$Task$map2, $elm$core$Tuple$pair, $elm$time$Time$here, $elm$time$Time$now)));
 		},
-		subscriptions: $author$project$Main$subscriptions,
-		update: $author$project$Main$update,
-		view: $author$project$Main$view
+		subscriptions: $author$project$Demo$subscriptions,
+		update: $author$project$Demo$update,
+		view: $author$project$Demo$view
 	});
-_Platform_export({'Main':{'init':$author$project$Main$main(
+_Platform_export({'Demo':{'init':$author$project$Demo$main(
 	$elm$json$Json$Decode$succeed(_Utils_Tuple0))(0)}});}(this));

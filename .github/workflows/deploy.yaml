@@ -26,7 +26,7 @@ jobs:
         run: |
           mkdir dist
           cp index.html dist/index.html
-          elm make src/Main.elm --output=dist/elm.js
+          elm make examples/Demo.elm --output=dist/elm.js
 
       - name: 🚀 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
