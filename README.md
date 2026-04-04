@@ -89,6 +89,10 @@ onSubmit model =
 
 On input, clear that field’s errors with `Validation.resetErrorsPerField "email" model.formErrors`.
 
+## 🚀 Demo
+
+## Explore the live demo: [https://dusste.github.io/elm-validation](https://dusste.github.io/elm-pie-chart)
+
 ## Running the demo
 
 ```bash
