@@ -10,6 +10,7 @@ import Html.Attributes as HA
 import Html.Events as HE
 import Http
 import Task
+import Time
 import Validation
 
 
@@ -27,6 +28,58 @@ textInputId =
 
 choosableFieldId =
     "choosable_field_id"
+
+
+passwordId =
+    "password_id"
+
+
+confirmPasswordId =
+    "confirm_password_id"
+
+
+businessEmailId =
+    "business_email_id"
+
+
+fullNameId =
+    "full_name_id"
+
+
+phoneId =
+    "phone_id"
+
+
+cardId =
+    "card_id"
+
+
+cvcId =
+    "cvc_id"
+
+
+expiryId =
+    "expiry_id"
+
+
+alphaOnlyId =
+    "alpha_only_id"
+
+
+slugId =
+    "slug_id"
+
+
+skillsFieldId =
+    "skills_field_id"
+
+
+companyId =
+    "company_id"
+
+
+requiredNoteId =
+    "required_note_id"
 
 
 
@@ -56,6 +109,21 @@ type alias Model =
     , selectedUser : Maybe User
     , searchUsersValue : String
     , isUsersDropdownOpen : Bool
+    , zone : Maybe Time.Zone
+    , now : Maybe Time.Posix
+    , password : String
+    , confirmPassword : String
+    , businessEmail : String
+    , fullName : String
+    , phone : String
+    , cardNumber : String
+    , cvc : String
+    , expiry : String
+    , alphaOnly : String
+    , slug : String
+    , selectedSkills : List String
+    , company : String
+    , requiredNote : String
     }
 
 
@@ -74,6 +142,21 @@ initialModel =
     , selectedUser = Nothing
     , searchUsersValue = ""
     , isUsersDropdownOpen = False
+    , zone = Nothing
+    , now = Nothing
+    , password = ""
+    , confirmPassword = ""
+    , businessEmail = ""
+    , fullName = ""
+    , phone = ""
+    , cardNumber = ""
+    , cvc = ""
+    , expiry = ""
+    , alphaOnly = ""
+    , slug = ""
+    , selectedSkills = []
+    , company = ""
+    , requiredNote = ""
     }
 
 
@@ -91,6 +174,21 @@ type Msg
     | SetChoosableValue String
     | SetSearchUsersValue String
     | SelectUser User
+    | Tick Time.Posix
+    | GotClock ( Time.Zone, Time.Posix )
+    | SetPassword String
+    | SetConfirmPassword String
+    | SetBusinessEmail String
+    | SetFullName String
+    | SetPhone String
+    | SetCardNumber String
+    | SetCvc String
+    | SetExpiry String
+    | SetAlphaOnly String
+    | SetSlug String
+    | ToggleSkill String
+    | SetCompany String
+    | SetRequiredNote String
 
 
 
@@ -100,6 +198,124 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        GotClock ( zone, posix ) ->
+            ( { model | zone = Just zone, now = Just posix }, Cmd.none )
+
+        Tick posix ->
+            ( { model | now = Just posix }, Cmd.none )
+
+        SetPassword value ->
+            ( { model
+                | password = value
+                , formErrors = Validation.resetErrorsPerField passwordId model.formErrors
+              }
+            , Cmd.none
+            )
+
+        SetConfirmPassword value ->
+            ( { model
+                | confirmPassword = value
+                , formErrors = Validation.resetErrorsPerField confirmPasswordId model.formErrors
+              }
+            , Cmd.none
+            )
+
+        SetBusinessEmail value ->
+            ( { model
+                | businessEmail = value
+                , formErrors = Validation.resetErrorsPerField businessEmailId model.formErrors
+              }
+            , Cmd.none
+            )
+
+        SetFullName value ->
+            ( { model
+                | fullName = value
+                , formErrors = Validation.resetErrorsPerField fullNameId model.formErrors
+              }
+            , Cmd.none
+            )
+
+        SetPhone value ->
+            ( { model
+                | phone = value
+                , formErrors = Validation.resetErrorsPerField phoneId model.formErrors
+              }
+            , Cmd.none
+            )
+
+        SetCardNumber value ->
+            ( { model
+                | cardNumber = value
+                , formErrors = Validation.resetErrorsPerField cardId model.formErrors
+              }
+            , Cmd.none
+            )
+
+        SetCvc value ->
+            ( { model
+                | cvc = value
+                , formErrors = Validation.resetErrorsPerField cvcId model.formErrors
+              }
+            , Cmd.none
+            )
+
+        SetExpiry value ->
+            ( { model
+                | expiry = value
+                , formErrors = Validation.resetErrorsPerField expiryId model.formErrors
+              }
+            , Cmd.none
+            )
+
+        SetAlphaOnly value ->
+            ( { model
+                | alphaOnly = value
+                , formErrors = Validation.resetErrorsPerField alphaOnlyId model.formErrors
+              }
+            , Cmd.none
+            )
+
+        SetSlug value ->
+            ( { model
+                | slug = value
+                , formErrors = Validation.resetErrorsPerField slugId model.formErrors
+              }
+            , Cmd.none
+            )
+
+        ToggleSkill skill ->
+            let
+                nextSkills =
+                    if List.member skill model.selectedSkills then
+                        List.filter (\s -> s /= skill) model.selectedSkills
+
+                    else
+                        skill :: model.selectedSkills
+            in
+            ( { model
+                | selectedSkills = nextSkills
+                , formErrors = Validation.resetErrorsPerField skillsFieldId model.formErrors
+              }
+            , Cmd.none
+            )
+
+        SetCompany value ->
+            ( { model
+                | company = value
+                , formErrors = Validation.resetErrorsPerField companyId model.formErrors
+              }
+            , Cmd.none
+            )
+
+        SetRequiredNote value ->
+            ( { model
+                | requiredNote = value
+                , formErrors = Validation.resetErrorsPerField requiredNoteId model.formErrors
+              }
+            , Cmd.none
+            )
+
         SetTextInputValue value ->
             let
                 resetErrorsPerField : Dict String (List String)
@@ -132,6 +348,17 @@ update msg model =
 
         Submit ->
             let
+                expiryRules : List (String -> Validation.Validation)
+                expiryRules =
+                    case ( model.zone, model.now ) of
+                        ( Just z, Just n ) ->
+                            [ Validation.CheckEmptyExparation
+                            , \s -> Validation.CheckExparation z n s
+                            ]
+
+                        _ ->
+                            [ Validation.CheckEmptyExparation ]
+
                 validationConfig : Validation.Config
                 validationConfig =
                     { validationRules =
@@ -167,6 +394,92 @@ update msg model =
                                     (model.users |> List.map (\user -> user.name))
                                 ]
                           , fieldValue = model.selectedUser |> Maybe.map .name |> Maybe.withDefault ""
+                          }
+                        , { fieldName = passwordId
+                          , fieldRules =
+                                [ Validation.CheckEmptyPassword
+                                , Validation.CheckPasswordTooShort 10
+                                , Validation.CheckPasswordCapitalize
+                                , Validation.CheckPasswordSpecialChar
+                                , Validation.CheckPasswordContainsInt
+                                ]
+                          , fieldValue = model.password
+                          }
+                        , { fieldName = confirmPasswordId
+                          , fieldRules =
+                                [ \confirm -> Validation.CheckPasswordMatch model.password confirm ]
+                          , fieldValue = model.confirmPassword
+                          }
+                        , { fieldName = businessEmailId
+                          , fieldRules =
+                                [ Validation.CheckEmptyEmail
+                                , Validation.CheckInvalidEmail
+                                , Validation.CheckForBusiness
+                                ]
+                          , fieldValue = model.businessEmail
+                          }
+                        , { fieldName = fullNameId
+                          , fieldRules =
+                                [ Validation.CheckEmptyName
+                                , Validation.CheckName
+                                ]
+                          , fieldValue = model.fullName
+                          }
+                        , { fieldName = phoneId
+                          , fieldRules =
+                                [ Validation.CheckEmptyPhoneNumber
+                                , Validation.CheckPhoneNumber
+                                ]
+                          , fieldValue = model.phone
+                          }
+                        , { fieldName = cardId
+                          , fieldRules =
+                                [ Validation.CheckEmptyCard
+                                , Validation.CheckCard
+                                ]
+                          , fieldValue = model.cardNumber
+                          }
+                        , { fieldName = cvcId
+                          , fieldRules =
+                                [ Validation.CheckEmptyCvc
+                                , Validation.CheckCvcLength
+                                ]
+                          , fieldValue = model.cvc
+                          }
+                        , { fieldName = expiryId
+                          , fieldRules = expiryRules
+                          , fieldValue = model.expiry
+                          }
+                        , { fieldName = alphaOnlyId
+                          , fieldRules =
+                                [ Validation.CheckForIntInInput
+                                , Validation.SpecialCharacter
+                                ]
+                          , fieldValue = model.alphaOnly
+                          }
+                        , { fieldName = slugId
+                          , fieldRules =
+                                [ Validation.CheckInvalidField
+                                , Validation.CheckForDuplicate [ "admin", "api", "www" ]
+                                ]
+                          , fieldValue = model.slug
+                          }
+                        , { fieldName = skillsFieldId
+                          , fieldRules =
+                                [ \_ ->
+                                    Validation.CheckIfListHaveMinimumItems model.selectedSkills 2 ""
+                                ]
+                          , fieldValue = ""
+                          }
+                        , { fieldName = companyId
+                          , fieldRules =
+                                [ Validation.CheckEmptyCompany ]
+                          , fieldValue = model.company
+                          }
+                        , { fieldName = requiredNoteId
+                          , fieldRules =
+                                [ Validation.CheckInvalidField ]
+                          , fieldValue = model.requiredNote
                           }
                         ]
                     , initialErrors = model.formErrors
@@ -213,7 +526,7 @@ update msg model =
             , Task.attempt (AttachFileRead key (File.name file)) (File.toUrl file)
             )
 
-        AttachFileRead id fileName result ->
+        AttachFileRead _ fileName result ->
             case result of
                 Ok fileToUrl ->
                     let
@@ -227,7 +540,7 @@ update msg model =
                     , Cmd.none
                     )
 
-                Err error ->
+                Err _ ->
                     ( model
                     , Cmd.none
                     )
@@ -259,6 +572,11 @@ update msg model =
 
 
 -- VIEW
+
+
+skillOptions : List String
+skillOptions =
+    [ "Elm", "TypeScript", "Rust", "Python" ]
 
 
 view : Model -> Html Msg
@@ -337,6 +655,266 @@ view model =
                 ]
                 []
             , Error.byFieldName textInputId model.formErrors
+                |> Error.withStandaloneField
+            ]
+        , Html.hr [ HA.class "my-4" ] []
+        , Html.div
+            [ HA.class "mt-2 flex flex-col gap-2" ]
+            [ Html.h2
+                [ HA.class "text-xl font-bold" ]
+                [ Html.text "Business email (no common personal domains)" ]
+            , Html.p
+                [ HA.class "text-sm text-gray-500" ]
+                [ Html.text "Same shape as personal email checks, plus rejects gmail.com, outlook.com, etc." ]
+            , Html.input
+                [ HA.type_ "text"
+                , HA.class "w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400"
+                , HA.style "border"
+                    (if Error.hasError businessEmailId model.formErrors then
+                        "1px solid red"
+
+                     else
+                        "1px solid #ccc"
+                    )
+                , HA.placeholder "you@company.com"
+                , HA.value model.businessEmail
+                , HE.onInput SetBusinessEmail
+                ]
+                []
+            , Error.byFieldName businessEmailId model.formErrors
+                |> Error.withStandaloneField
+            ]
+        , Html.hr [ HA.class "my-4" ] []
+        , Html.div
+            [ HA.class "mt-2 flex flex-col gap-2" ]
+            [ Html.h2
+                [ HA.class "text-xl font-bold" ]
+                [ Html.text "Password rules + confirmation" ]
+            , Html.input
+                [ HA.type_ "password"
+                , HA.class "w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400"
+                , HA.style "border"
+                    (if Error.hasError passwordId model.formErrors then
+                        "1px solid red"
+
+                     else
+                        "1px solid #ccc"
+                    )
+                , HA.placeholder "Password (10+ chars, cap, number, special)"
+                , HA.value model.password
+                , HE.onInput SetPassword
+                ]
+                []
+            , Error.byFieldName passwordId model.formErrors
+                |> Error.withStandaloneField
+            , Html.input
+                [ HA.type_ "password"
+                , HA.class "w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400 mt-2"
+                , HA.style "border"
+                    (if Error.hasError confirmPasswordId model.formErrors then
+                        "1px solid red"
+
+                     else
+                        "1px solid #ccc"
+                    )
+                , HA.placeholder "Confirm password"
+                , HA.value model.confirmPassword
+                , HE.onInput SetConfirmPassword
+                ]
+                []
+            , Error.byFieldName confirmPasswordId model.formErrors
+                |> Error.withStandaloneField
+            ]
+        , Html.hr [ HA.class "my-4" ] []
+        , Html.div
+            [ HA.class "mt-2 flex flex-col gap-2" ]
+            [ Html.h2
+                [ HA.class "text-xl font-bold" ]
+                [ Html.text "Full name (two alphabetic words)" ]
+            , Html.input
+                [ HA.type_ "text"
+                , HA.class "w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400"
+                , HA.style "border"
+                    (if Error.hasError fullNameId model.formErrors then
+                        "1px solid red"
+
+                     else
+                        "1px solid #ccc"
+                    )
+                , HA.placeholder "Jane Doe"
+                , HA.value model.fullName
+                , HE.onInput SetFullName
+                ]
+                []
+            , Error.byFieldName fullNameId model.formErrors
+                |> Error.withStandaloneField
+            ]
+        , Html.hr [ HA.class "my-4" ] []
+        , Html.div
+            [ HA.class "mt-2 flex flex-col gap-2" ]
+            [ Html.h2
+                [ HA.class "text-xl font-bold" ]
+                [ Html.text "Phone number" ]
+            , Html.input
+                [ HA.type_ "text"
+                , HA.class "w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400"
+                , HA.style "border"
+                    (if Error.hasError phoneId model.formErrors then
+                        "1px solid red"
+
+                     else
+                        "1px solid #ccc"
+                    )
+                , HA.placeholder "+1 234 567 8901"
+                , HA.value model.phone
+                , HE.onInput SetPhone
+                ]
+                []
+            , Error.byFieldName phoneId model.formErrors
+                |> Error.withStandaloneField
+            ]
+        , Html.hr [ HA.class "my-4" ] []
+        , Html.div
+            [ HA.class "mt-2 flex flex-col gap-2" ]
+            [ Html.h2
+                [ HA.class "text-xl font-bold" ]
+                [ Html.text "Card, CVC, expiration (MM/YY)" ]
+            , Html.p
+                [ HA.class "text-sm text-gray-500" ]
+                [ Html.text "Use a test number that passes Luhn, e.g. 4242 4242 4242 4242." ]
+            , Html.input
+                [ HA.type_ "text"
+                , HA.class "w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400"
+                , HA.style "border"
+                    (if Error.hasError cardId model.formErrors then
+                        "1px solid red"
+
+                     else
+                        "1px solid #ccc"
+                    )
+                , HA.placeholder "Card number"
+                , HA.value model.cardNumber
+                , HE.onInput SetCardNumber
+                ]
+                []
+            , Error.byFieldName cardId model.formErrors
+                |> Error.withStandaloneField
+            , Html.div
+                [ HA.class "flex gap-2 mt-2" ]
+                [ Html.input
+                    [ HA.type_ "text"
+                    , HA.class "w-24 p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400"
+                    , HA.style "border"
+                        (if Error.hasError cvcId model.formErrors then
+                            "1px solid red"
+
+                         else
+                            "1px solid #ccc"
+                        )
+                    , HA.placeholder "CVC"
+                    , HA.value model.cvc
+                    , HE.onInput SetCvc
+                    ]
+                    []
+                , Html.input
+                    [ HA.type_ "text"
+                    , HA.class "flex-1 p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400"
+                    , HA.style "border"
+                        (if Error.hasError expiryId model.formErrors then
+                            "1px solid red"
+
+                         else
+                            "1px solid #ccc"
+                        )
+                    , HA.placeholder "MM/YY"
+                    , HA.value model.expiry
+                    , HE.onInput SetExpiry
+                    ]
+                    []
+                ]
+            , Error.byFieldName cvcId model.formErrors
+                |> Error.withStandaloneField
+            , Error.byFieldName expiryId model.formErrors
+                |> Error.withStandaloneField
+            ]
+        , Html.hr [ HA.class "my-4" ] []
+        , Html.div
+            [ HA.class "mt-2 flex flex-col gap-2" ]
+            [ Html.h2
+                [ HA.class "text-xl font-bold" ]
+                [ Html.text "Letters only (no digits, no punctuation)" ]
+            , Html.p
+                [ HA.class "text-sm text-gray-500" ]
+                [ Html.text "Combines CheckForIntInInput and SpecialCharacter on one field." ]
+            , Html.input
+                [ HA.type_ "text"
+                , HA.class "w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400"
+                , HA.style "border"
+                    (if Error.hasError alphaOnlyId model.formErrors then
+                        "1px solid red"
+
+                     else
+                        "1px solid #ccc"
+                    )
+                , HA.placeholder "letters and spaces only"
+                , HA.value model.alphaOnly
+                , HE.onInput SetAlphaOnly
+                ]
+                []
+            , Error.byFieldName alphaOnlyId model.formErrors
+                |> Error.withStandaloneField
+            ]
+        , Html.hr [ HA.class "my-4" ] []
+        , Html.div
+            [ HA.class "mt-2 flex flex-col gap-2" ]
+            [ Html.h2
+                [ HA.class "text-xl font-bold" ]
+                [ Html.text "Pick at least two skills (CheckIfListHaveMinimumItems)" ]
+            , Html.p
+                [ HA.class "text-sm text-gray-500" ]
+                [ Html.text "The third argument to the variant is ignored; the list lives in your model." ]
+            , Html.div
+                [ HA.class "flex flex-wrap gap-3" ]
+                (List.map
+                    (\skill ->
+                        Html.label
+                            [ HA.class "inline-flex items-center gap-2 text-sm cursor-pointer" ]
+                            [ Html.input
+                                [ HA.type_ "checkbox"
+                                , HA.checked (List.member skill model.selectedSkills)
+                                , HE.onCheck (\_ -> ToggleSkill skill)
+                                ]
+                                []
+                            , Html.text skill
+                            ]
+                    )
+                    skillOptions
+                )
+            , Error.byFieldName skillsFieldId model.formErrors
+                |> Error.withStandaloneField
+            ]
+        , Html.hr [ HA.class "my-4" ] []
+        , Html.div
+            [ HA.class "mt-2 flex flex-col gap-2" ]
+            [ Html.h2
+                [ HA.class "text-xl font-bold" ]
+                [ Html.text "Required note (CheckInvalidField)" ]
+            , Html.input
+                [ HA.type_ "text"
+                , HA.class "w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400"
+                , HA.style "border"
+                    (if Error.hasError requiredNoteId model.formErrors then
+                        "1px solid red"
+
+                     else
+                        "1px solid #ccc"
+                    )
+                , HA.placeholder "Any non-empty text"
+                , HA.value model.requiredNote
+                , HE.onInput SetRequiredNote
+                ]
+                []
+            , Error.byFieldName requiredNoteId model.formErrors
                 |> Error.withStandaloneField
             ]
         , Html.hr [ HA.class "my-4" ] []
@@ -447,7 +1025,7 @@ view model =
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-    Sub.none
+    Time.every 60000 Tick
 
 
 
@@ -457,7 +1035,11 @@ subscriptions _ =
 main : Program () Model Msg
 main =
     Browser.element
-        { init = \_ -> ( initialModel, Cmd.none )
+        { init =
+            \_ ->
+                ( initialModel
+                , Task.perform GotClock (Task.map2 Tuple.pair Time.here Time.now)
+                )
         , update = update
         , view = view
         , subscriptions = subscriptions

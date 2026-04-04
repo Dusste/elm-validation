@@ -4380,6 +4380,52 @@ function _Browser_load(url)
 }
 
 
+
+function _Time_now(millisToPosix)
+{
+	return _Scheduler_binding(function(callback)
+	{
+		callback(_Scheduler_succeed(millisToPosix(Date.now())));
+	});
+}
+
+var _Time_setInterval = F2(function(interval, task)
+{
+	return _Scheduler_binding(function(callback)
+	{
+		var id = setInterval(function() { _Scheduler_rawSpawn(task); }, interval);
+		return function() { clearInterval(id); };
+	});
+});
+
+function _Time_here()
+{
+	return _Scheduler_binding(function(callback)
+	{
+		callback(_Scheduler_succeed(
+			A2($elm$time$Time$customZone, -(new Date().getTimezoneOffset()), _List_Nil)
+		));
+	});
+}
+
+
+function _Time_getZoneName()
+{
+	return _Scheduler_binding(function(callback)
+	{
+		try
+		{
+			var name = $elm$time$Time$Name(Intl.DateTimeFormat().resolvedOptions().timeZone);
+		}
+		catch (e)
+		{
+			var name = $elm$time$Time$Offset(new Date().getTimezoneOffset());
+		}
+		callback(_Scheduler_succeed(name));
+	});
+}
+
+
 // CREATE
 
 var _Regex_never = /.^/;
@@ -4737,6 +4783,9 @@ var $elm$core$Set$toList = function (_v0) {
 	return $elm$core$Dict$keys(dict);
 };
 var $elm$core$Basics$GT = {$: 'GT'};
+var $author$project$Main$GotClock = function (a) {
+	return {$: 'GotClock', a: a};
+};
 var $elm$core$Result$Err = function (a) {
 	return {$: 'Err', a: a};
 };
@@ -5446,15 +5495,41 @@ var $elm$core$Task$perform = F2(
 				A2($elm$core$Task$map, toMessage, task)));
 	});
 var $elm$browser$Browser$element = _Browser_element;
+var $elm$time$Time$Name = function (a) {
+	return {$: 'Name', a: a};
+};
+var $elm$time$Time$Offset = function (a) {
+	return {$: 'Offset', a: a};
+};
+var $elm$time$Time$Zone = F2(
+	function (a, b) {
+		return {$: 'Zone', a: a, b: b};
+	});
+var $elm$time$Time$customZone = $elm$time$Time$Zone;
+var $elm$time$Time$here = _Time_here(_Utils_Tuple0);
 var $elm$core$Dict$RBEmpty_elm_builtin = {$: 'RBEmpty_elm_builtin'};
 var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
 var $author$project$Main$initialModel = {
+	alphaOnly: '',
 	attachment: $elm$core$Maybe$Nothing,
+	businessEmail: '',
+	cardNumber: '',
 	choosableValue: '',
+	company: '',
+	confirmPassword: '',
+	cvc: '',
+	expiry: '',
 	formErrors: $elm$core$Dict$empty,
+	fullName: '',
 	isUsersDropdownOpen: false,
+	now: $elm$core$Maybe$Nothing,
+	password: '',
+	phone: '',
+	requiredNote: '',
 	searchUsersValue: '',
+	selectedSkills: _List_Nil,
 	selectedUser: $elm$core$Maybe$Nothing,
+	slug: '',
 	textInputValue: '',
 	textareaValue: '',
 	users: _List_fromArray(
@@ -5462,171 +5537,60 @@ var $author$project$Main$initialModel = {
 			{email: 'john.doe@example.com', name: 'John Johnson', role: 'Admin'},
 			{email: 'tim.markus@something.com', name: 'Tim Markus', role: 'Member'},
 			{email: 'chris.green@lala.com', name: 'Chris Green', role: 'Member'}
-		])
+		]),
+	zone: $elm$core$Maybe$Nothing
 };
-var $elm$core$Platform$Cmd$batch = _Platform_batch;
-var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
-var $elm$core$Platform$Sub$batch = _Platform_batch;
-var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
-var $author$project$Main$subscriptions = function (_v0) {
-	return $elm$core$Platform$Sub$none;
+var $elm$time$Time$Posix = function (a) {
+	return {$: 'Posix', a: a};
 };
-var $author$project$Main$AttachFileRead = F3(
-	function (a, b, c) {
-		return {$: 'AttachFileRead', a: a, b: b, c: c};
-	});
-var $author$project$Main$AttachFileRequestProceed = F2(
+var $elm$time$Time$millisToPosix = $elm$time$Time$Posix;
+var $elm$time$Time$now = _Time_now($elm$time$Time$millisToPosix);
+var $elm$core$Tuple$pair = F2(
 	function (a, b) {
-		return {$: 'AttachFileRequestProceed', a: a, b: b};
+		return _Utils_Tuple2(a, b);
 	});
-var $author$project$Validation$CheckEmptyEmail = function (a) {
-	return {$: 'CheckEmptyEmail', a: a};
+var $author$project$Main$Tick = function (a) {
+	return {$: 'Tick', a: a};
 };
-var $author$project$Validation$CheckFileSize = F2(
+var $elm$time$Time$Every = F2(
 	function (a, b) {
-		return {$: 'CheckFileSize', a: a, b: b};
+		return {$: 'Every', a: a, b: b};
 	});
-var $author$project$Validation$CheckFileType = F2(
-	function (a, b) {
-		return {$: 'CheckFileType', a: a, b: b};
+var $elm$time$Time$State = F2(
+	function (taggers, processes) {
+		return {processes: processes, taggers: taggers};
 	});
-var $author$project$Validation$CheckInvalidEmail = function (a) {
-	return {$: 'CheckInvalidEmail', a: a};
-};
-var $author$project$Validation$CheckShouldMatch = F2(
-	function (a, b) {
-		return {$: 'CheckShouldMatch', a: a, b: b};
-	});
-var $author$project$Validation$CheckStringTooLong = F2(
-	function (a, b) {
-		return {$: 'CheckStringTooLong', a: a, b: b};
-	});
-var $author$project$Validation$CheckStringTooShort = F2(
-	function (a, b) {
-		return {$: 'CheckStringTooShort', a: a, b: b};
-	});
-var $author$project$Validation$InvalidChoosableField = function (a) {
-	return {$: 'InvalidChoosableField', a: a};
-};
-var $elm$core$Maybe$andThen = F2(
-	function (callback, maybeValue) {
-		if (maybeValue.$ === 'Just') {
-			var value = maybeValue.a;
-			return callback(value);
-		} else {
-			return $elm$core$Maybe$Nothing;
-		}
-	});
-var $elm$core$List$any = F2(
-	function (isOkay, list) {
-		any:
-		while (true) {
-			if (!list.b) {
-				return false;
-			} else {
-				var x = list.a;
-				var xs = list.b;
-				if (isOkay(x)) {
-					return true;
-				} else {
-					var $temp$isOkay = isOkay,
-						$temp$list = xs;
-					isOkay = $temp$isOkay;
-					list = $temp$list;
-					continue any;
-				}
-			}
-		}
-	});
-var $elm$core$Basics$composeL = F3(
-	function (g, f, x) {
-		return g(
-			f(x));
-	});
-var $elm$core$Basics$not = _Basics_not;
-var $elm$core$List$all = F2(
-	function (isOkay, list) {
-		return !A2(
-			$elm$core$List$any,
-			A2($elm$core$Basics$composeL, $elm$core$Basics$not, isOkay),
-			list);
-	});
-var $elm$core$List$isEmpty = function (xs) {
-	if (!xs.b) {
-		return true;
-	} else {
-		return false;
-	}
-};
-var $elm$core$Dict$values = function (dict) {
-	return A3(
-		$elm$core$Dict$foldr,
-		F3(
-			function (key, value, valueList) {
-				return A2($elm$core$List$cons, value, valueList);
-			}),
-		_List_Nil,
-		dict);
-};
-var $author$project$Validation$anyActiveError = function (errors) {
-	return !A2(
-		$elm$core$List$all,
-		$elm$core$List$isEmpty,
-		$elm$core$Dict$values(errors));
-};
-var $author$project$Main$attachmentId = 'attachment_id';
-var $elm$core$Task$onError = _Scheduler_onError;
-var $elm$core$Task$attempt = F2(
-	function (resultToMessage, task) {
-		return $elm$core$Task$command(
-			$elm$core$Task$Perform(
-				A2(
-					$elm$core$Task$onError,
-					A2(
-						$elm$core$Basics$composeL,
-						A2($elm$core$Basics$composeL, $elm$core$Task$succeed, resultToMessage),
-						$elm$core$Result$Err),
-					A2(
-						$elm$core$Task$andThen,
-						A2(
-							$elm$core$Basics$composeL,
-							A2($elm$core$Basics$composeL, $elm$core$Task$succeed, resultToMessage),
-							$elm$core$Result$Ok),
-						task))));
-	});
-var $elm$core$List$append = F2(
-	function (xs, ys) {
-		if (!ys.b) {
-			return xs;
-		} else {
-			return A3($elm$core$List$foldr, $elm$core$List$cons, ys, xs);
-		}
-	});
-var $elm$core$List$concat = function (lists) {
-	return A3($elm$core$List$foldr, $elm$core$List$append, _List_Nil, lists);
-};
-var $elm$core$Dict$foldl = F3(
-	function (func, acc, dict) {
-		foldl:
+var $elm$time$Time$init = $elm$core$Task$succeed(
+	A2($elm$time$Time$State, $elm$core$Dict$empty, $elm$core$Dict$empty));
+var $elm$core$Basics$compare = _Utils_compare;
+var $elm$core$Dict$get = F2(
+	function (targetKey, dict) {
+		get:
 		while (true) {
 			if (dict.$ === 'RBEmpty_elm_builtin') {
-				return acc;
+				return $elm$core$Maybe$Nothing;
 			} else {
 				var key = dict.b;
 				var value = dict.c;
 				var left = dict.d;
 				var right = dict.e;
-				var $temp$func = func,
-					$temp$acc = A3(
-					func,
-					key,
-					value,
-					A3($elm$core$Dict$foldl, func, acc, left)),
-					$temp$dict = right;
-				func = $temp$func;
-				acc = $temp$acc;
-				dict = $temp$dict;
-				continue foldl;
+				var _v1 = A2($elm$core$Basics$compare, targetKey, key);
+				switch (_v1.$) {
+					case 'LT':
+						var $temp$targetKey = targetKey,
+							$temp$dict = left;
+						targetKey = $temp$targetKey;
+						dict = $temp$dict;
+						continue get;
+					case 'EQ':
+						return $elm$core$Maybe$Just(value);
+					default:
+						var $temp$targetKey = targetKey,
+							$temp$dict = right;
+						targetKey = $temp$targetKey;
+						dict = $temp$dict;
+						continue get;
+				}
 			}
 		}
 	});
@@ -5690,7 +5654,6 @@ var $elm$core$Dict$balance = F5(
 			}
 		}
 	});
-var $elm$core$Basics$compare = _Utils_compare;
 var $elm$core$Dict$insertHelp = F3(
 	function (key, value, dict) {
 		if (dict.$ === 'RBEmpty_elm_builtin') {
@@ -5739,6 +5702,462 @@ var $elm$core$Dict$insert = F3(
 			return x;
 		}
 	});
+var $elm$time$Time$addMySub = F2(
+	function (_v0, state) {
+		var interval = _v0.a;
+		var tagger = _v0.b;
+		var _v1 = A2($elm$core$Dict$get, interval, state);
+		if (_v1.$ === 'Nothing') {
+			return A3(
+				$elm$core$Dict$insert,
+				interval,
+				_List_fromArray(
+					[tagger]),
+				state);
+		} else {
+			var taggers = _v1.a;
+			return A3(
+				$elm$core$Dict$insert,
+				interval,
+				A2($elm$core$List$cons, tagger, taggers),
+				state);
+		}
+	});
+var $elm$core$Process$kill = _Scheduler_kill;
+var $elm$core$Dict$foldl = F3(
+	function (func, acc, dict) {
+		foldl:
+		while (true) {
+			if (dict.$ === 'RBEmpty_elm_builtin') {
+				return acc;
+			} else {
+				var key = dict.b;
+				var value = dict.c;
+				var left = dict.d;
+				var right = dict.e;
+				var $temp$func = func,
+					$temp$acc = A3(
+					func,
+					key,
+					value,
+					A3($elm$core$Dict$foldl, func, acc, left)),
+					$temp$dict = right;
+				func = $temp$func;
+				acc = $temp$acc;
+				dict = $temp$dict;
+				continue foldl;
+			}
+		}
+	});
+var $elm$core$Dict$merge = F6(
+	function (leftStep, bothStep, rightStep, leftDict, rightDict, initialResult) {
+		var stepState = F3(
+			function (rKey, rValue, _v0) {
+				stepState:
+				while (true) {
+					var list = _v0.a;
+					var result = _v0.b;
+					if (!list.b) {
+						return _Utils_Tuple2(
+							list,
+							A3(rightStep, rKey, rValue, result));
+					} else {
+						var _v2 = list.a;
+						var lKey = _v2.a;
+						var lValue = _v2.b;
+						var rest = list.b;
+						if (_Utils_cmp(lKey, rKey) < 0) {
+							var $temp$rKey = rKey,
+								$temp$rValue = rValue,
+								$temp$_v0 = _Utils_Tuple2(
+								rest,
+								A3(leftStep, lKey, lValue, result));
+							rKey = $temp$rKey;
+							rValue = $temp$rValue;
+							_v0 = $temp$_v0;
+							continue stepState;
+						} else {
+							if (_Utils_cmp(lKey, rKey) > 0) {
+								return _Utils_Tuple2(
+									list,
+									A3(rightStep, rKey, rValue, result));
+							} else {
+								return _Utils_Tuple2(
+									rest,
+									A4(bothStep, lKey, lValue, rValue, result));
+							}
+						}
+					}
+				}
+			});
+		var _v3 = A3(
+			$elm$core$Dict$foldl,
+			stepState,
+			_Utils_Tuple2(
+				$elm$core$Dict$toList(leftDict),
+				initialResult),
+			rightDict);
+		var leftovers = _v3.a;
+		var intermediateResult = _v3.b;
+		return A3(
+			$elm$core$List$foldl,
+			F2(
+				function (_v4, result) {
+					var k = _v4.a;
+					var v = _v4.b;
+					return A3(leftStep, k, v, result);
+				}),
+			intermediateResult,
+			leftovers);
+	});
+var $elm$core$Platform$sendToSelf = _Platform_sendToSelf;
+var $elm$time$Time$setInterval = _Time_setInterval;
+var $elm$core$Process$spawn = _Scheduler_spawn;
+var $elm$time$Time$spawnHelp = F3(
+	function (router, intervals, processes) {
+		if (!intervals.b) {
+			return $elm$core$Task$succeed(processes);
+		} else {
+			var interval = intervals.a;
+			var rest = intervals.b;
+			var spawnTimer = $elm$core$Process$spawn(
+				A2(
+					$elm$time$Time$setInterval,
+					interval,
+					A2($elm$core$Platform$sendToSelf, router, interval)));
+			var spawnRest = function (id) {
+				return A3(
+					$elm$time$Time$spawnHelp,
+					router,
+					rest,
+					A3($elm$core$Dict$insert, interval, id, processes));
+			};
+			return A2($elm$core$Task$andThen, spawnRest, spawnTimer);
+		}
+	});
+var $elm$time$Time$onEffects = F3(
+	function (router, subs, _v0) {
+		var processes = _v0.processes;
+		var rightStep = F3(
+			function (_v6, id, _v7) {
+				var spawns = _v7.a;
+				var existing = _v7.b;
+				var kills = _v7.c;
+				return _Utils_Tuple3(
+					spawns,
+					existing,
+					A2(
+						$elm$core$Task$andThen,
+						function (_v5) {
+							return kills;
+						},
+						$elm$core$Process$kill(id)));
+			});
+		var newTaggers = A3($elm$core$List$foldl, $elm$time$Time$addMySub, $elm$core$Dict$empty, subs);
+		var leftStep = F3(
+			function (interval, taggers, _v4) {
+				var spawns = _v4.a;
+				var existing = _v4.b;
+				var kills = _v4.c;
+				return _Utils_Tuple3(
+					A2($elm$core$List$cons, interval, spawns),
+					existing,
+					kills);
+			});
+		var bothStep = F4(
+			function (interval, taggers, id, _v3) {
+				var spawns = _v3.a;
+				var existing = _v3.b;
+				var kills = _v3.c;
+				return _Utils_Tuple3(
+					spawns,
+					A3($elm$core$Dict$insert, interval, id, existing),
+					kills);
+			});
+		var _v1 = A6(
+			$elm$core$Dict$merge,
+			leftStep,
+			bothStep,
+			rightStep,
+			newTaggers,
+			processes,
+			_Utils_Tuple3(
+				_List_Nil,
+				$elm$core$Dict$empty,
+				$elm$core$Task$succeed(_Utils_Tuple0)));
+		var spawnList = _v1.a;
+		var existingDict = _v1.b;
+		var killTask = _v1.c;
+		return A2(
+			$elm$core$Task$andThen,
+			function (newProcesses) {
+				return $elm$core$Task$succeed(
+					A2($elm$time$Time$State, newTaggers, newProcesses));
+			},
+			A2(
+				$elm$core$Task$andThen,
+				function (_v2) {
+					return A3($elm$time$Time$spawnHelp, router, spawnList, existingDict);
+				},
+				killTask));
+	});
+var $elm$time$Time$onSelfMsg = F3(
+	function (router, interval, state) {
+		var _v0 = A2($elm$core$Dict$get, interval, state.taggers);
+		if (_v0.$ === 'Nothing') {
+			return $elm$core$Task$succeed(state);
+		} else {
+			var taggers = _v0.a;
+			var tellTaggers = function (time) {
+				return $elm$core$Task$sequence(
+					A2(
+						$elm$core$List$map,
+						function (tagger) {
+							return A2(
+								$elm$core$Platform$sendToApp,
+								router,
+								tagger(time));
+						},
+						taggers));
+			};
+			return A2(
+				$elm$core$Task$andThen,
+				function (_v1) {
+					return $elm$core$Task$succeed(state);
+				},
+				A2($elm$core$Task$andThen, tellTaggers, $elm$time$Time$now));
+		}
+	});
+var $elm$core$Basics$composeL = F3(
+	function (g, f, x) {
+		return g(
+			f(x));
+	});
+var $elm$time$Time$subMap = F2(
+	function (f, _v0) {
+		var interval = _v0.a;
+		var tagger = _v0.b;
+		return A2(
+			$elm$time$Time$Every,
+			interval,
+			A2($elm$core$Basics$composeL, f, tagger));
+	});
+_Platform_effectManagers['Time'] = _Platform_createManager($elm$time$Time$init, $elm$time$Time$onEffects, $elm$time$Time$onSelfMsg, 0, $elm$time$Time$subMap);
+var $elm$time$Time$subscription = _Platform_leaf('Time');
+var $elm$time$Time$every = F2(
+	function (interval, tagger) {
+		return $elm$time$Time$subscription(
+			A2($elm$time$Time$Every, interval, tagger));
+	});
+var $author$project$Main$subscriptions = function (_v0) {
+	return A2($elm$time$Time$every, 60000, $author$project$Main$Tick);
+};
+var $author$project$Main$AttachFileRead = F3(
+	function (a, b, c) {
+		return {$: 'AttachFileRead', a: a, b: b, c: c};
+	});
+var $author$project$Main$AttachFileRequestProceed = F2(
+	function (a, b) {
+		return {$: 'AttachFileRequestProceed', a: a, b: b};
+	});
+var $author$project$Validation$CheckCard = function (a) {
+	return {$: 'CheckCard', a: a};
+};
+var $author$project$Validation$CheckCvcLength = function (a) {
+	return {$: 'CheckCvcLength', a: a};
+};
+var $author$project$Validation$CheckEmptyCard = function (a) {
+	return {$: 'CheckEmptyCard', a: a};
+};
+var $author$project$Validation$CheckEmptyCompany = function (a) {
+	return {$: 'CheckEmptyCompany', a: a};
+};
+var $author$project$Validation$CheckEmptyCvc = function (a) {
+	return {$: 'CheckEmptyCvc', a: a};
+};
+var $author$project$Validation$CheckEmptyEmail = function (a) {
+	return {$: 'CheckEmptyEmail', a: a};
+};
+var $author$project$Validation$CheckEmptyExparation = function (a) {
+	return {$: 'CheckEmptyExparation', a: a};
+};
+var $author$project$Validation$CheckEmptyName = function (a) {
+	return {$: 'CheckEmptyName', a: a};
+};
+var $author$project$Validation$CheckEmptyPassword = function (a) {
+	return {$: 'CheckEmptyPassword', a: a};
+};
+var $author$project$Validation$CheckEmptyPhoneNumber = function (a) {
+	return {$: 'CheckEmptyPhoneNumber', a: a};
+};
+var $author$project$Validation$CheckExparation = F3(
+	function (a, b, c) {
+		return {$: 'CheckExparation', a: a, b: b, c: c};
+	});
+var $author$project$Validation$CheckFileSize = F2(
+	function (a, b) {
+		return {$: 'CheckFileSize', a: a, b: b};
+	});
+var $author$project$Validation$CheckFileType = F2(
+	function (a, b) {
+		return {$: 'CheckFileType', a: a, b: b};
+	});
+var $author$project$Validation$CheckForBusiness = function (a) {
+	return {$: 'CheckForBusiness', a: a};
+};
+var $author$project$Validation$CheckForDuplicate = F2(
+	function (a, b) {
+		return {$: 'CheckForDuplicate', a: a, b: b};
+	});
+var $author$project$Validation$CheckForIntInInput = function (a) {
+	return {$: 'CheckForIntInInput', a: a};
+};
+var $author$project$Validation$CheckIfListHaveMinimumItems = F3(
+	function (a, b, c) {
+		return {$: 'CheckIfListHaveMinimumItems', a: a, b: b, c: c};
+	});
+var $author$project$Validation$CheckInvalidEmail = function (a) {
+	return {$: 'CheckInvalidEmail', a: a};
+};
+var $author$project$Validation$CheckInvalidField = function (a) {
+	return {$: 'CheckInvalidField', a: a};
+};
+var $author$project$Validation$CheckName = function (a) {
+	return {$: 'CheckName', a: a};
+};
+var $author$project$Validation$CheckPasswordCapitalize = function (a) {
+	return {$: 'CheckPasswordCapitalize', a: a};
+};
+var $author$project$Validation$CheckPasswordContainsInt = function (a) {
+	return {$: 'CheckPasswordContainsInt', a: a};
+};
+var $author$project$Validation$CheckPasswordMatch = F2(
+	function (a, b) {
+		return {$: 'CheckPasswordMatch', a: a, b: b};
+	});
+var $author$project$Validation$CheckPasswordSpecialChar = function (a) {
+	return {$: 'CheckPasswordSpecialChar', a: a};
+};
+var $author$project$Validation$CheckPasswordTooShort = F2(
+	function (a, b) {
+		return {$: 'CheckPasswordTooShort', a: a, b: b};
+	});
+var $author$project$Validation$CheckPhoneNumber = function (a) {
+	return {$: 'CheckPhoneNumber', a: a};
+};
+var $author$project$Validation$CheckShouldMatch = F2(
+	function (a, b) {
+		return {$: 'CheckShouldMatch', a: a, b: b};
+	});
+var $author$project$Validation$CheckStringTooLong = F2(
+	function (a, b) {
+		return {$: 'CheckStringTooLong', a: a, b: b};
+	});
+var $author$project$Validation$CheckStringTooShort = F2(
+	function (a, b) {
+		return {$: 'CheckStringTooShort', a: a, b: b};
+	});
+var $author$project$Validation$InvalidChoosableField = function (a) {
+	return {$: 'InvalidChoosableField', a: a};
+};
+var $author$project$Validation$SpecialCharacter = function (a) {
+	return {$: 'SpecialCharacter', a: a};
+};
+var $author$project$Main$alphaOnlyId = 'alpha_only_id';
+var $elm$core$Maybe$andThen = F2(
+	function (callback, maybeValue) {
+		if (maybeValue.$ === 'Just') {
+			var value = maybeValue.a;
+			return callback(value);
+		} else {
+			return $elm$core$Maybe$Nothing;
+		}
+	});
+var $elm$core$List$any = F2(
+	function (isOkay, list) {
+		any:
+		while (true) {
+			if (!list.b) {
+				return false;
+			} else {
+				var x = list.a;
+				var xs = list.b;
+				if (isOkay(x)) {
+					return true;
+				} else {
+					var $temp$isOkay = isOkay,
+						$temp$list = xs;
+					isOkay = $temp$isOkay;
+					list = $temp$list;
+					continue any;
+				}
+			}
+		}
+	});
+var $elm$core$Basics$not = _Basics_not;
+var $elm$core$List$all = F2(
+	function (isOkay, list) {
+		return !A2(
+			$elm$core$List$any,
+			A2($elm$core$Basics$composeL, $elm$core$Basics$not, isOkay),
+			list);
+	});
+var $elm$core$List$isEmpty = function (xs) {
+	if (!xs.b) {
+		return true;
+	} else {
+		return false;
+	}
+};
+var $elm$core$Dict$values = function (dict) {
+	return A3(
+		$elm$core$Dict$foldr,
+		F3(
+			function (key, value, valueList) {
+				return A2($elm$core$List$cons, value, valueList);
+			}),
+		_List_Nil,
+		dict);
+};
+var $author$project$Validation$anyActiveError = function (errors) {
+	return !A2(
+		$elm$core$List$all,
+		$elm$core$List$isEmpty,
+		$elm$core$Dict$values(errors));
+};
+var $author$project$Main$attachmentId = 'attachment_id';
+var $elm$core$Task$onError = _Scheduler_onError;
+var $elm$core$Task$attempt = F2(
+	function (resultToMessage, task) {
+		return $elm$core$Task$command(
+			$elm$core$Task$Perform(
+				A2(
+					$elm$core$Task$onError,
+					A2(
+						$elm$core$Basics$composeL,
+						A2($elm$core$Basics$composeL, $elm$core$Task$succeed, resultToMessage),
+						$elm$core$Result$Err),
+					A2(
+						$elm$core$Task$andThen,
+						A2(
+							$elm$core$Basics$composeL,
+							A2($elm$core$Basics$composeL, $elm$core$Task$succeed, resultToMessage),
+							$elm$core$Result$Ok),
+						task))));
+	});
+var $author$project$Main$businessEmailId = 'business_email_id';
+var $author$project$Main$cardId = 'card_id';
+var $elm$core$List$append = F2(
+	function (xs, ys) {
+		if (!ys.b) {
+			return xs;
+		} else {
+			return A3($elm$core$List$foldr, $elm$core$List$cons, ys, xs);
+		}
+	});
+var $elm$core$List$concat = function (lists) {
+	return A3($elm$core$List$foldr, $elm$core$List$append, _List_Nil, lists);
+};
 var $elm$core$Dict$filter = F2(
 	function (isGood, dict) {
 		return A3(
@@ -5758,37 +6177,6 @@ var $elm$core$Maybe$map = F2(
 				f(value));
 		} else {
 			return $elm$core$Maybe$Nothing;
-		}
-	});
-var $elm$core$Dict$get = F2(
-	function (targetKey, dict) {
-		get:
-		while (true) {
-			if (dict.$ === 'RBEmpty_elm_builtin') {
-				return $elm$core$Maybe$Nothing;
-			} else {
-				var key = dict.b;
-				var value = dict.c;
-				var left = dict.d;
-				var right = dict.e;
-				var _v1 = A2($elm$core$Basics$compare, targetKey, key);
-				switch (_v1.$) {
-					case 'LT':
-						var $temp$targetKey = targetKey,
-							$temp$dict = left;
-						targetKey = $temp$targetKey;
-						dict = $temp$dict;
-						continue get;
-					case 'EQ':
-						return $elm$core$Maybe$Just(value);
-					default:
-						var $temp$targetKey = targetKey,
-							$temp$dict = right;
-						targetKey = $temp$targetKey;
-						dict = $temp$dict;
-						continue get;
-				}
-			}
 		}
 	});
 var $elm$core$Dict$member = F2(
@@ -7130,10 +7518,10 @@ var $author$project$Validation$checkErrors = function (_v0) {
 			validationRules));
 };
 var $author$project$Main$choosableFieldId = 'choosable_field_id';
-var $elm$time$Time$Posix = function (a) {
-	return {$: 'Posix', a: a};
-};
-var $elm$time$Time$millisToPosix = $elm$time$Time$Posix;
+var $author$project$Main$companyId = 'company_id';
+var $author$project$Main$confirmPasswordId = 'confirm_password_id';
+var $author$project$Main$cvcId = 'cvc_id';
+var $author$project$Main$expiryId = 'expiry_id';
 var $elm$file$File$Select$file = F2(
 	function (mimes, toMsg) {
 		return A2(
@@ -7141,7 +7529,13 @@ var $elm$file$File$Select$file = F2(
 			toMsg,
 			_File_uploadOne(mimes));
 	});
+var $author$project$Main$fullNameId = 'full_name_id';
 var $elm$file$File$name = _File_name;
+var $elm$core$Platform$Cmd$batch = _Platform_batch;
+var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
+var $author$project$Main$passwordId = 'password_id';
+var $author$project$Main$phoneId = 'phone_id';
+var $author$project$Main$requiredNoteId = 'required_note_id';
 var $author$project$Validation$resetErrorsPerField = F2(
 	function (key, errors) {
 		return A2(
@@ -7152,12 +7546,171 @@ var $author$project$Validation$resetErrorsPerField = F2(
 				}),
 			errors);
 	});
+var $author$project$Main$skillsFieldId = 'skills_field_id';
+var $author$project$Main$slugId = 'slug_id';
 var $author$project$Main$textInputId = 'text_input_id';
 var $author$project$Main$textareaId = 'textarea_id';
 var $elm$file$File$toUrl = _File_toUrl;
 var $author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
+			case 'GotClock':
+				var _v1 = msg.a;
+				var zone = _v1.a;
+				var posix = _v1.b;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							now: $elm$core$Maybe$Just(posix),
+							zone: $elm$core$Maybe$Just(zone)
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 'Tick':
+				var posix = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							now: $elm$core$Maybe$Just(posix)
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 'SetPassword':
+				var value = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$passwordId, model.formErrors),
+							password: value
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 'SetConfirmPassword':
+				var value = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							confirmPassword: value,
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$confirmPasswordId, model.formErrors)
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 'SetBusinessEmail':
+				var value = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							businessEmail: value,
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$businessEmailId, model.formErrors)
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 'SetFullName':
+				var value = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$fullNameId, model.formErrors),
+							fullName: value
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 'SetPhone':
+				var value = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$phoneId, model.formErrors),
+							phone: value
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 'SetCardNumber':
+				var value = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							cardNumber: value,
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$cardId, model.formErrors)
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 'SetCvc':
+				var value = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							cvc: value,
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$cvcId, model.formErrors)
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 'SetExpiry':
+				var value = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							expiry: value,
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$expiryId, model.formErrors)
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 'SetAlphaOnly':
+				var value = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							alphaOnly: value,
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$alphaOnlyId, model.formErrors)
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 'SetSlug':
+				var value = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$slugId, model.formErrors),
+							slug: value
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 'ToggleSkill':
+				var skill = msg.a;
+				var nextSkills = A2($elm$core$List$member, skill, model.selectedSkills) ? A2(
+					$elm$core$List$filter,
+					function (s) {
+						return !_Utils_eq(s, skill);
+					},
+					model.selectedSkills) : A2($elm$core$List$cons, skill, model.selectedSkills);
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$skillsFieldId, model.formErrors),
+							selectedSkills: nextSkills
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 'SetCompany':
+				var value = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							company: value,
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$companyId, model.formErrors)
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 'SetRequiredNote':
+				var value = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							formErrors: A2($author$project$Validation$resetErrorsPerField, $author$project$Main$requiredNoteId, model.formErrors),
+							requiredNote: value
+						}),
+					$elm$core$Platform$Cmd$none);
 			case 'SetTextInputValue':
 				var value = msg.a;
 				var resetErrorsPerField = A2($author$project$Validation$resetErrorsPerField, $author$project$Main$textInputId, model.formErrors);
@@ -7183,6 +7736,23 @@ var $author$project$Main$update = F2(
 						{choosableValue: value, formErrors: resetErrorsPerField}),
 					$elm$core$Platform$Cmd$none);
 			case 'Submit':
+				var expiryRules = function () {
+					var _v3 = _Utils_Tuple2(model.zone, model.now);
+					if ((_v3.a.$ === 'Just') && (_v3.b.$ === 'Just')) {
+						var z = _v3.a.a;
+						var n = _v3.b.a;
+						return _List_fromArray(
+							[
+								$author$project$Validation$CheckEmptyExparation,
+								function (s) {
+								return A3($author$project$Validation$CheckExparation, z, n, s);
+							}
+							]);
+					} else {
+						return _List_fromArray(
+							[$author$project$Validation$CheckEmptyExparation]);
+					}
+				}();
 				var validationConfig = {
 					initialErrors: model.formErrors,
 					validationRules: _List_fromArray(
@@ -7248,6 +7818,98 @@ var $author$project$Main$update = F2(
 										return $.name;
 									},
 									model.selectedUser))
+						},
+							{
+							fieldName: $author$project$Main$passwordId,
+							fieldRules: _List_fromArray(
+								[
+									$author$project$Validation$CheckEmptyPassword,
+									$author$project$Validation$CheckPasswordTooShort(10),
+									$author$project$Validation$CheckPasswordCapitalize,
+									$author$project$Validation$CheckPasswordSpecialChar,
+									$author$project$Validation$CheckPasswordContainsInt
+								]),
+							fieldValue: model.password
+						},
+							{
+							fieldName: $author$project$Main$confirmPasswordId,
+							fieldRules: _List_fromArray(
+								[
+									function (confirm) {
+									return A2($author$project$Validation$CheckPasswordMatch, model.password, confirm);
+								}
+								]),
+							fieldValue: model.confirmPassword
+						},
+							{
+							fieldName: $author$project$Main$businessEmailId,
+							fieldRules: _List_fromArray(
+								[$author$project$Validation$CheckEmptyEmail, $author$project$Validation$CheckInvalidEmail, $author$project$Validation$CheckForBusiness]),
+							fieldValue: model.businessEmail
+						},
+							{
+							fieldName: $author$project$Main$fullNameId,
+							fieldRules: _List_fromArray(
+								[$author$project$Validation$CheckEmptyName, $author$project$Validation$CheckName]),
+							fieldValue: model.fullName
+						},
+							{
+							fieldName: $author$project$Main$phoneId,
+							fieldRules: _List_fromArray(
+								[$author$project$Validation$CheckEmptyPhoneNumber, $author$project$Validation$CheckPhoneNumber]),
+							fieldValue: model.phone
+						},
+							{
+							fieldName: $author$project$Main$cardId,
+							fieldRules: _List_fromArray(
+								[$author$project$Validation$CheckEmptyCard, $author$project$Validation$CheckCard]),
+							fieldValue: model.cardNumber
+						},
+							{
+							fieldName: $author$project$Main$cvcId,
+							fieldRules: _List_fromArray(
+								[$author$project$Validation$CheckEmptyCvc, $author$project$Validation$CheckCvcLength]),
+							fieldValue: model.cvc
+						},
+							{fieldName: $author$project$Main$expiryId, fieldRules: expiryRules, fieldValue: model.expiry},
+							{
+							fieldName: $author$project$Main$alphaOnlyId,
+							fieldRules: _List_fromArray(
+								[$author$project$Validation$CheckForIntInInput, $author$project$Validation$SpecialCharacter]),
+							fieldValue: model.alphaOnly
+						},
+							{
+							fieldName: $author$project$Main$slugId,
+							fieldRules: _List_fromArray(
+								[
+									$author$project$Validation$CheckInvalidField,
+									$author$project$Validation$CheckForDuplicate(
+									_List_fromArray(
+										['admin', 'api', 'www']))
+								]),
+							fieldValue: model.slug
+						},
+							{
+							fieldName: $author$project$Main$skillsFieldId,
+							fieldRules: _List_fromArray(
+								[
+									function (_v2) {
+									return A3($author$project$Validation$CheckIfListHaveMinimumItems, model.selectedSkills, 2, '');
+								}
+								]),
+							fieldValue: ''
+						},
+							{
+							fieldName: $author$project$Main$companyId,
+							fieldRules: _List_fromArray(
+								[$author$project$Validation$CheckEmptyCompany]),
+							fieldValue: model.company
+						},
+							{
+							fieldName: $author$project$Main$requiredNoteId,
+							fieldRules: _List_fromArray(
+								[$author$project$Validation$CheckInvalidField]),
+							fieldValue: model.requiredNote
 						}
 						])
 				};
@@ -7282,7 +7944,6 @@ var $author$project$Main$update = F2(
 							$elm$file$File$name(file)),
 						$elm$file$File$toUrl(file)));
 			case 'AttachFileRead':
-				var id = msg.a;
 				var fileName = msg.b;
 				var result = msg.c;
 				if (result.$ === 'Ok') {
@@ -7299,7 +7960,6 @@ var $author$project$Main$update = F2(
 							}),
 						$elm$core$Platform$Cmd$none);
 				} else {
-					var error = result.a;
 					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 				}
 			case 'SetSearchUsersValue':
@@ -7326,11 +7986,47 @@ var $author$project$Main$update = F2(
 var $author$project$Main$SelectUser = function (a) {
 	return {$: 'SelectUser', a: a};
 };
+var $author$project$Main$SetAlphaOnly = function (a) {
+	return {$: 'SetAlphaOnly', a: a};
+};
+var $author$project$Main$SetBusinessEmail = function (a) {
+	return {$: 'SetBusinessEmail', a: a};
+};
+var $author$project$Main$SetCardNumber = function (a) {
+	return {$: 'SetCardNumber', a: a};
+};
 var $author$project$Main$SetChoosableValue = function (a) {
 	return {$: 'SetChoosableValue', a: a};
 };
+var $author$project$Main$SetCompany = function (a) {
+	return {$: 'SetCompany', a: a};
+};
+var $author$project$Main$SetConfirmPassword = function (a) {
+	return {$: 'SetConfirmPassword', a: a};
+};
+var $author$project$Main$SetCvc = function (a) {
+	return {$: 'SetCvc', a: a};
+};
+var $author$project$Main$SetExpiry = function (a) {
+	return {$: 'SetExpiry', a: a};
+};
+var $author$project$Main$SetFullName = function (a) {
+	return {$: 'SetFullName', a: a};
+};
+var $author$project$Main$SetPassword = function (a) {
+	return {$: 'SetPassword', a: a};
+};
+var $author$project$Main$SetPhone = function (a) {
+	return {$: 'SetPhone', a: a};
+};
+var $author$project$Main$SetRequiredNote = function (a) {
+	return {$: 'SetRequiredNote', a: a};
+};
 var $author$project$Main$SetSearchUsersValue = function (a) {
 	return {$: 'SetSearchUsersValue', a: a};
+};
+var $author$project$Main$SetSlug = function (a) {
+	return {$: 'SetSlug', a: a};
 };
 var $author$project$Main$SetTextInputValue = function (a) {
 	return {$: 'SetTextInputValue', a: a};
@@ -7339,6 +8035,9 @@ var $author$project$Main$SetTextareaValue = function (a) {
 	return {$: 'SetTextareaValue', a: a};
 };
 var $author$project$Main$Submit = {$: 'Submit'};
+var $author$project$Main$ToggleSkill = function (a) {
+	return {$: 'ToggleSkill', a: a};
+};
 var $author$project$Main$TriggerAttachFile = function (a) {
 	return {$: 'TriggerAttachFile', a: a};
 };
@@ -7350,6 +8049,15 @@ var $author$project$Error$byFieldName = F2(
 			_List_Nil,
 			A2($elm$core$Dict$get, field, errors));
 	});
+var $elm$json$Json$Encode$bool = _Json_wrap;
+var $elm$html$Html$Attributes$boolProperty = F2(
+	function (key, bool) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			$elm$json$Json$Encode$bool(bool));
+	});
+var $elm$html$Html$Attributes$checked = $elm$html$Html$Attributes$boolProperty('checked');
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -7370,6 +8078,7 @@ var $author$project$Error$hasError = F2(
 var $elm$html$Html$hr = _VirtualDom_node('hr');
 var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
 var $elm$html$Html$input = _VirtualDom_node('input');
+var $elm$html$Html$label = _VirtualDom_node('label');
 var $elm$html$Html$li = _VirtualDom_node('li');
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 'Normal', a: a};
@@ -7382,6 +8091,23 @@ var $elm$html$Html$Events$on = F2(
 			event,
 			$elm$virtual_dom$VirtualDom$Normal(decoder));
 	});
+var $elm$json$Json$Decode$field = _Json_decodeField;
+var $elm$json$Json$Decode$at = F2(
+	function (fields, decoder) {
+		return A3($elm$core$List$foldr, $elm$json$Json$Decode$field, decoder, fields);
+	});
+var $elm$json$Json$Decode$bool = _Json_decodeBool;
+var $elm$html$Html$Events$targetChecked = A2(
+	$elm$json$Json$Decode$at,
+	_List_fromArray(
+		['target', 'checked']),
+	$elm$json$Json$Decode$bool);
+var $elm$html$Html$Events$onCheck = function (tagger) {
+	return A2(
+		$elm$html$Html$Events$on,
+		'change',
+		A2($elm$json$Json$Decode$map, tagger, $elm$html$Html$Events$targetChecked));
+};
 var $elm$html$Html$Events$onClick = function (msg) {
 	return A2(
 		$elm$html$Html$Events$on,
@@ -7400,11 +8126,6 @@ var $elm$html$Html$Events$stopPropagationOn = F2(
 			$elm$virtual_dom$VirtualDom$on,
 			event,
 			$elm$virtual_dom$VirtualDom$MayStopPropagation(decoder));
-	});
-var $elm$json$Json$Decode$field = _Json_decodeField;
-var $elm$json$Json$Decode$at = F2(
-	function (fields, decoder) {
-		return A3($elm$core$List$foldr, $elm$json$Json$Decode$field, decoder, fields);
 	});
 var $elm$json$Json$Decode$string = _Json_decodeString;
 var $elm$html$Html$Events$targetValue = A2(
@@ -7425,6 +8146,8 @@ var $elm$html$Html$option = _VirtualDom_node('option');
 var $elm$html$Html$p = _VirtualDom_node('p');
 var $elm$html$Html$Attributes$placeholder = $elm$html$Html$Attributes$stringProperty('placeholder');
 var $elm$html$Html$select = _VirtualDom_node('select');
+var $author$project$Main$skillOptions = _List_fromArray(
+	['Elm', 'TypeScript', 'Rust', 'Python']);
 var $elm$html$Html$span = _VirtualDom_node('span');
 var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
@@ -7660,6 +8383,565 @@ var $author$project$Main$view = function (model) {
 							]),
 						_List_fromArray(
 							[
+								$elm$html$Html$text('Business email (no common personal domains)')
+							])),
+						A2(
+						$elm$html$Html$p,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('text-sm text-gray-500')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Same shape as personal email checks, plus rejects gmail.com, outlook.com, etc.')
+							])),
+						A2(
+						$elm$html$Html$input,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$type_('text'),
+								$elm$html$Html$Attributes$class('w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400'),
+								A2(
+								$elm$html$Html$Attributes$style,
+								'border',
+								A2($author$project$Error$hasError, $author$project$Main$businessEmailId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+								$elm$html$Html$Attributes$placeholder('you@company.com'),
+								$elm$html$Html$Attributes$value(model.businessEmail),
+								$elm$html$Html$Events$onInput($author$project$Main$SetBusinessEmail)
+							]),
+						_List_Nil),
+						$author$project$Error$withStandaloneField(
+						A2($author$project$Error$byFieldName, $author$project$Main$businessEmailId, model.formErrors))
+					])),
+				A2(
+				$elm$html$Html$hr,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('my-4')
+					]),
+				_List_Nil),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('mt-2 flex flex-col gap-2')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$h2,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('text-xl font-bold')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Password rules + confirmation')
+							])),
+						A2(
+						$elm$html$Html$input,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$type_('password'),
+								$elm$html$Html$Attributes$class('w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400'),
+								A2(
+								$elm$html$Html$Attributes$style,
+								'border',
+								A2($author$project$Error$hasError, $author$project$Main$passwordId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+								$elm$html$Html$Attributes$placeholder('Password (10+ chars, cap, number, special)'),
+								$elm$html$Html$Attributes$value(model.password),
+								$elm$html$Html$Events$onInput($author$project$Main$SetPassword)
+							]),
+						_List_Nil),
+						$author$project$Error$withStandaloneField(
+						A2($author$project$Error$byFieldName, $author$project$Main$passwordId, model.formErrors)),
+						A2(
+						$elm$html$Html$input,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$type_('password'),
+								$elm$html$Html$Attributes$class('w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400 mt-2'),
+								A2(
+								$elm$html$Html$Attributes$style,
+								'border',
+								A2($author$project$Error$hasError, $author$project$Main$confirmPasswordId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+								$elm$html$Html$Attributes$placeholder('Confirm password'),
+								$elm$html$Html$Attributes$value(model.confirmPassword),
+								$elm$html$Html$Events$onInput($author$project$Main$SetConfirmPassword)
+							]),
+						_List_Nil),
+						$author$project$Error$withStandaloneField(
+						A2($author$project$Error$byFieldName, $author$project$Main$confirmPasswordId, model.formErrors))
+					])),
+				A2(
+				$elm$html$Html$hr,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('my-4')
+					]),
+				_List_Nil),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('mt-2 flex flex-col gap-2')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$h2,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('text-xl font-bold')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Full name (two alphabetic words)')
+							])),
+						A2(
+						$elm$html$Html$input,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$type_('text'),
+								$elm$html$Html$Attributes$class('w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400'),
+								A2(
+								$elm$html$Html$Attributes$style,
+								'border',
+								A2($author$project$Error$hasError, $author$project$Main$fullNameId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+								$elm$html$Html$Attributes$placeholder('Jane Doe'),
+								$elm$html$Html$Attributes$value(model.fullName),
+								$elm$html$Html$Events$onInput($author$project$Main$SetFullName)
+							]),
+						_List_Nil),
+						$author$project$Error$withStandaloneField(
+						A2($author$project$Error$byFieldName, $author$project$Main$fullNameId, model.formErrors))
+					])),
+				A2(
+				$elm$html$Html$hr,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('my-4')
+					]),
+				_List_Nil),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('mt-2 flex flex-col gap-2')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$h2,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('text-xl font-bold')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Phone number')
+							])),
+						A2(
+						$elm$html$Html$input,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$type_('text'),
+								$elm$html$Html$Attributes$class('w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400'),
+								A2(
+								$elm$html$Html$Attributes$style,
+								'border',
+								A2($author$project$Error$hasError, $author$project$Main$phoneId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+								$elm$html$Html$Attributes$placeholder('+1 234 567 8901'),
+								$elm$html$Html$Attributes$value(model.phone),
+								$elm$html$Html$Events$onInput($author$project$Main$SetPhone)
+							]),
+						_List_Nil),
+						$author$project$Error$withStandaloneField(
+						A2($author$project$Error$byFieldName, $author$project$Main$phoneId, model.formErrors))
+					])),
+				A2(
+				$elm$html$Html$hr,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('my-4')
+					]),
+				_List_Nil),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('mt-2 flex flex-col gap-2')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$h2,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('text-xl font-bold')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Card, CVC, expiration (MM/YY)')
+							])),
+						A2(
+						$elm$html$Html$p,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('text-sm text-gray-500')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Use a test number that passes Luhn, e.g. 4242 4242 4242 4242.')
+							])),
+						A2(
+						$elm$html$Html$input,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$type_('text'),
+								$elm$html$Html$Attributes$class('w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400'),
+								A2(
+								$elm$html$Html$Attributes$style,
+								'border',
+								A2($author$project$Error$hasError, $author$project$Main$cardId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+								$elm$html$Html$Attributes$placeholder('Card number'),
+								$elm$html$Html$Attributes$value(model.cardNumber),
+								$elm$html$Html$Events$onInput($author$project$Main$SetCardNumber)
+							]),
+						_List_Nil),
+						$author$project$Error$withStandaloneField(
+						A2($author$project$Error$byFieldName, $author$project$Main$cardId, model.formErrors)),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('flex gap-2 mt-2')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$input,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$type_('text'),
+										$elm$html$Html$Attributes$class('w-24 p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400'),
+										A2(
+										$elm$html$Html$Attributes$style,
+										'border',
+										A2($author$project$Error$hasError, $author$project$Main$cvcId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+										$elm$html$Html$Attributes$placeholder('CVC'),
+										$elm$html$Html$Attributes$value(model.cvc),
+										$elm$html$Html$Events$onInput($author$project$Main$SetCvc)
+									]),
+								_List_Nil),
+								A2(
+								$elm$html$Html$input,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$type_('text'),
+										$elm$html$Html$Attributes$class('flex-1 p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400'),
+										A2(
+										$elm$html$Html$Attributes$style,
+										'border',
+										A2($author$project$Error$hasError, $author$project$Main$expiryId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+										$elm$html$Html$Attributes$placeholder('MM/YY'),
+										$elm$html$Html$Attributes$value(model.expiry),
+										$elm$html$Html$Events$onInput($author$project$Main$SetExpiry)
+									]),
+								_List_Nil)
+							])),
+						$author$project$Error$withStandaloneField(
+						A2($author$project$Error$byFieldName, $author$project$Main$cvcId, model.formErrors)),
+						$author$project$Error$withStandaloneField(
+						A2($author$project$Error$byFieldName, $author$project$Main$expiryId, model.formErrors))
+					])),
+				A2(
+				$elm$html$Html$hr,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('my-4')
+					]),
+				_List_Nil),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('mt-2 flex flex-col gap-2')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$h2,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('text-xl font-bold')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Letters only (no digits, no punctuation)')
+							])),
+						A2(
+						$elm$html$Html$p,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('text-sm text-gray-500')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Combines CheckForIntInInput and SpecialCharacter on one field.')
+							])),
+						A2(
+						$elm$html$Html$input,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$type_('text'),
+								$elm$html$Html$Attributes$class('w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400'),
+								A2(
+								$elm$html$Html$Attributes$style,
+								'border',
+								A2($author$project$Error$hasError, $author$project$Main$alphaOnlyId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+								$elm$html$Html$Attributes$placeholder('letters and spaces only'),
+								$elm$html$Html$Attributes$value(model.alphaOnly),
+								$elm$html$Html$Events$onInput($author$project$Main$SetAlphaOnly)
+							]),
+						_List_Nil),
+						$author$project$Error$withStandaloneField(
+						A2($author$project$Error$byFieldName, $author$project$Main$alphaOnlyId, model.formErrors))
+					])),
+				A2(
+				$elm$html$Html$hr,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('my-4')
+					]),
+				_List_Nil),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('mt-2 flex flex-col gap-2')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$h2,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('text-xl font-bold')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Reserved slug (CheckInvalidField + CheckForDuplicate)')
+							])),
+						A2(
+						$elm$html$Html$p,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('text-sm text-gray-500')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Try admin, api, or www — duplicates are rejected case-insensitively.')
+							])),
+						A2(
+						$elm$html$Html$input,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$type_('text'),
+								$elm$html$Html$Attributes$class('w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400'),
+								A2(
+								$elm$html$Html$Attributes$style,
+								'border',
+								A2($author$project$Error$hasError, $author$project$Main$slugId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+								$elm$html$Html$Attributes$placeholder('project slug'),
+								$elm$html$Html$Attributes$value(model.slug),
+								$elm$html$Html$Events$onInput($author$project$Main$SetSlug)
+							]),
+						_List_Nil),
+						$author$project$Error$withStandaloneField(
+						A2($author$project$Error$byFieldName, $author$project$Main$slugId, model.formErrors))
+					])),
+				A2(
+				$elm$html$Html$hr,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('my-4')
+					]),
+				_List_Nil),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('mt-2 flex flex-col gap-2')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$h2,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('text-xl font-bold')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Pick at least two skills (CheckIfListHaveMinimumItems)')
+							])),
+						A2(
+						$elm$html$Html$p,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('text-sm text-gray-500')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('The third argument to the variant is ignored; the list lives in your model.')
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('flex flex-wrap gap-3')
+							]),
+						A2(
+							$elm$core$List$map,
+							function (skill) {
+								return A2(
+									$elm$html$Html$label,
+									_List_fromArray(
+										[
+											$elm$html$Html$Attributes$class('inline-flex items-center gap-2 text-sm cursor-pointer')
+										]),
+									_List_fromArray(
+										[
+											A2(
+											$elm$html$Html$input,
+											_List_fromArray(
+												[
+													$elm$html$Html$Attributes$type_('checkbox'),
+													$elm$html$Html$Attributes$checked(
+													A2($elm$core$List$member, skill, model.selectedSkills)),
+													$elm$html$Html$Events$onCheck(
+													function (_v1) {
+														return $author$project$Main$ToggleSkill(skill);
+													})
+												]),
+											_List_Nil),
+											$elm$html$Html$text(skill)
+										]));
+							},
+							$author$project$Main$skillOptions)),
+						$author$project$Error$withStandaloneField(
+						A2($author$project$Error$byFieldName, $author$project$Main$skillsFieldId, model.formErrors))
+					])),
+				A2(
+				$elm$html$Html$hr,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('my-4')
+					]),
+				_List_Nil),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('mt-2 flex flex-col gap-2')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$h2,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('text-xl font-bold')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Company name (CheckEmptyCompany)')
+							])),
+						A2(
+						$elm$html$Html$input,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$type_('text'),
+								$elm$html$Html$Attributes$class('w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400'),
+								A2(
+								$elm$html$Html$Attributes$style,
+								'border',
+								A2($author$project$Error$hasError, $author$project$Main$companyId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+								$elm$html$Html$Attributes$placeholder('Acme Inc.'),
+								$elm$html$Html$Attributes$value(model.company),
+								$elm$html$Html$Events$onInput($author$project$Main$SetCompany)
+							]),
+						_List_Nil),
+						$author$project$Error$withStandaloneField(
+						A2($author$project$Error$byFieldName, $author$project$Main$companyId, model.formErrors))
+					])),
+				A2(
+				$elm$html$Html$hr,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('my-4')
+					]),
+				_List_Nil),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('mt-2 flex flex-col gap-2')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$h2,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('text-xl font-bold')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Required note (CheckInvalidField)')
+							])),
+						A2(
+						$elm$html$Html$input,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$type_('text'),
+								$elm$html$Html$Attributes$class('w-full p-2 rounded focus:outline-none focus:ring-0 focus:border-gray-400'),
+								A2(
+								$elm$html$Html$Attributes$style,
+								'border',
+								A2($author$project$Error$hasError, $author$project$Main$requiredNoteId, model.formErrors) ? '1px solid red' : '1px solid #ccc'),
+								$elm$html$Html$Attributes$placeholder('Any non-empty text'),
+								$elm$html$Html$Attributes$value(model.requiredNote),
+								$elm$html$Html$Events$onInput($author$project$Main$SetRequiredNote)
+							]),
+						_List_Nil),
+						$author$project$Error$withStandaloneField(
+						A2($author$project$Error$byFieldName, $author$project$Main$requiredNoteId, model.formErrors))
+					])),
+				A2(
+				$elm$html$Html$hr,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('my-4')
+					]),
+				_List_Nil),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('mt-2 flex flex-col gap-2')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$h2,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('text-xl font-bold')
+							]),
+						_List_fromArray(
+							[
 								$elm$html$Html$text('Choosable field validation')
 							])),
 						A2(
@@ -7758,9 +9040,9 @@ var $author$project$Main$view = function (model) {
 								$elm$html$Html$text('Select a user from the list below')
 							])),
 						function () {
-						var _v1 = model.selectedUser;
-						if (_v1.$ === 'Just') {
-							var user = _v1.a;
+						var _v2 = model.selectedUser;
+						if (_v2.$ === 'Just') {
+							var user = _v2.a;
 							return A2(
 								$elm$html$Html$div,
 								_List_fromArray(
@@ -7908,7 +9190,12 @@ var $author$project$Main$view = function (model) {
 var $author$project$Main$main = $elm$browser$Browser$element(
 	{
 		init: function (_v0) {
-			return _Utils_Tuple2($author$project$Main$initialModel, $elm$core$Platform$Cmd$none);
+			return _Utils_Tuple2(
+				$author$project$Main$initialModel,
+				A2(
+					$elm$core$Task$perform,
+					$author$project$Main$GotClock,
+					A3($elm$core$Task$map2, $elm$core$Tuple$pair, $elm$time$Time$here, $elm$time$Time$now)));
 		},
 		subscriptions: $author$project$Main$subscriptions,
 		update: $author$project$Main$update,

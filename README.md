@@ -11,7 +11,7 @@ This repository is an Elm **application** that bundles the validation modules wi
 **Types**
 
 - **`Config`** — `{ validationRules : List ValidationRule, initialErrors : Dict String (List String) }`. Pass your previous error dict as `initialErrors` so unrelated keys are preserved only for fields that appear in `validationRules` (see `checkErrors`).
-- **`ValidationRule`** — `{ fieldName : String, fieldRules : List (String -> Validation), fieldValue : String }`. Each rule is a function that takes the field’s string value and returns a `Validation` variant.
+- **`ValidationRule`** — `{ fieldName : String, fieldRules : List (String -> Validation), fieldValue : String }`. Each rule is a function that takes the field’s string value and returns a `Validation` variant. Use closures when a rule needs extra data (e.g. `CheckPasswordMatch`, `CheckExparation`, or `CheckIfListHaveMinimumItems` with a list from your model).
 - **`Validation`** — Sum type of checks. When a check _fails_, its human-readable message is added for that `fieldName` (see `shouldInsertError` / `validationToErrorMsg` in the source).
 
 **Functions**
@@ -89,28 +89,51 @@ onSubmit model =
 
 On input, clear that field’s errors with `Validation.resetErrorsPerField "email" model.formErrors`.
 
-## 🚀 Demo
+## Demo
 
-## Explore the live demo: [https://dusste.github.io/elm-validation](https://dusste.github.io/elm-validation)
+Live build: [https://dusste.github.io/elm-validation](https://dusste.github.io/elm-validation)
 
-## Running the demo
+The interactive app in `src/Main.elm` exercises almost every `Validation` variant on submit:
+
+- **Length** — textarea min/max character count
+- **Files** — max size and allowed types (content read as data URL / string)
+- **Email** — empty + format on one field; separate **business email** field (rejects common personal domains)
+- **Password** — empty, minimum length, capital letter, digit, special character, and **match** with confirmation
+- **Name** — empty + two alphabetic words (`CheckName`)
+- **Phone** — empty + pattern
+- **Card / CVC / expiry** — Luhn card, 3-digit CVC, `MM/YY` not expired (`CheckExparation` uses `Time.here` / `Time.now` on init and a periodic clock tick)
+- **Letters-only field** — `CheckForIntInInput` and `SpecialCharacter` together (no digits, no punctuation)
+- **Slug** — `CheckInvalidField` plus `CheckForDuplicate` against reserved names
+- **Skills checkboxes** — `CheckIfListHaveMinimumItems` on a list held in the model (the rule’s string argument is unused)
+- **Company** — `CheckEmptyCompany`
+- **Note** — generic required text via `CheckInvalidField`
+- **Select** — `InvalidChoosableField`
+- **User picker** — `CheckShouldMatch` against a list of allowed names
+
+## Running locally
 
 ```bash
 npm install
-# build steps as defined in package.json, e.g.:
-npx elm make src/Main.elm --output=dist/elm.js
+npm start
 ```
 
-Then open `index.html` (or use your usual static server). The demo covers textarea min/max length, file size/type, email, a required select, and matching a typed value against a list (e.g. user names).
+This runs Elm compile to `dist/elm.js` and Tailwind in watch mode (`tailwind.css` → `dist/tailwind.build.css`). Open `index.html` in the browser (or serve the project root with any static file server).
+
+For a one-off Elm build without watch:
+
+```bash
+npx elm make src/Main.elm --output=dist/elm.js
+```
 
 ## Dependencies
 
 - **Elm 0.19.1** — see `elm.json`.
 - **Direct Elm libs**: `elm/core`, `elm/html`, `elm/time`, `elm/regex`, plus `elm/file` / `elm/http` / `elm/browser` for the demo app.
 - **elm-community/string-extra** — used in `Util` for email helpers.
+- **Node** (optional tooling) — `elm`, `tailwindcss`, `concurrently` via `package.json` for local dev and CSS.
 
 ## Notes
 
 - Email validation is intentionally simple; see comments in `Util.isValidEmail`.
 - Some user-facing strings in `Validation` may still be tweaked (there is an in-source TODO on error messaging).
-- Expiry validation needs the current zone and time passed into `CheckExparation`.
+- `CheckExparation` needs the current zone and time; until both are available, the demo only enforces non-empty expiry (see `Main.elm` submit config).
