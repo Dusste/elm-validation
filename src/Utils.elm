@@ -1,8 +1,34 @@
 module Utils exposing (..)
 
+import Parser exposing ((|.), (|=))
+import Parsers
 import Regex
 import String.Extra
 import Time
+import Time.Extra
+
+
+
+-- value = "2026-05-22"
+-- months = 2
+-- return False if date is in the future 2 months
+
+
+checkDateIsInTheFuture : Int -> Time.Zone -> Time.Posix -> String -> Bool
+checkDateIsInTheFuture months zone currentDate value =
+    let
+        -- "2026-05-22" OR "2026-05-22:00:00:00" -> (Time.Posix)
+        datePosix : Maybe Time.Posix
+        datePosix =
+            Parser.run (Parsers.dateLocalParser zone) value
+                |> Result.toMaybe
+    in
+    case datePosix of
+        Just choosenDate ->
+            Time.Extra.diff Time.Extra.Month zone currentDate choosenDate < months
+
+        Nothing ->
+            True
 
 
 bytesToKilobytes : Int -> String
