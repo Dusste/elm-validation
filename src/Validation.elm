@@ -54,6 +54,7 @@ type Validation
     | CheckIfDateIsInTheFuture Int Time.Zone Time.Posix String -- months in the future
     | CheckPasswordMatch String String
     | CheckInvalidField String -- most general check for missing any value
+    | CheckBasedOnCondition Bool String String -- check if the condition is true, if not, return the error message
     | InvalidChoosableField String -- most general choosable field validation
     | CheckShouldMatch (List String) String -- string should match one of the strings from list
     | CheckForDuplicate (List String) String -- string should not be duplicate of any string from list
@@ -67,6 +68,9 @@ validationToErrorMsg validation =
         -- TODO more intuitive way to know what to print
         CheckIfDateIsInTheFuture months _ _ _ ->
             "Date must be " ++ String.fromInt months ++ " months in the future"
+
+        CheckBasedOnCondition _ errorMsg _ ->
+            errorMsg
 
         CheckInvalidField _ ->
             "Field can't be empty"
@@ -223,6 +227,9 @@ shouldInsertError validation =
     case validation of
         CheckIfDateIsInTheFuture months zone currentDate value ->
             Utils.checkDateIsInTheFuture months zone currentDate value
+
+        CheckBasedOnCondition isTrue _ _ ->
+            isTrue
 
         CheckInvalidField field ->
             Utils.checkEmpty field
